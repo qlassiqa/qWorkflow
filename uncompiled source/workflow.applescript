@@ -3,8 +3,8 @@ Name:				Workflow (*adapted from PHP code to AppleScript*)
 Description:			This AppleScript class provides several useful functions for retrieving, parsing, 
 					and formatting data to be used with Alfred 2 Workflow.
 Author:				Ursan Razvan
-Original Source: 	https://github.com/jdfwarrior/Workflows  (written in PHP by David Ferguson)
-Revised: 			
+Original Source:		https://github.com/jdfwarrior/Workflows  (written in PHP by David Ferguson)
+Revised: 			17 March 2013
 Version: 			0.1
 *)
 
