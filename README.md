@@ -55,7 +55,7 @@ set wf to wf's new_workflow_with_bundle("com.mycompany.mybundlename")
 * since AppleScript doesn't support optional parameters, there are 2 constructors: `new_workflow()` with no parameters, which creates a new class that automatically fetches the bundle name from Alfred, and `new_workflow_with_bundle(<name>)`, which takes 1 parameter with the desired bundle name if none was specified in Alfred.
 
 ###Methods
-For more info, tips and examples on how to use the following methods, please consult the accompanying documentation (it is vital that you read the documentation to get a grip on how to properly use this library).
+For more info, tips and examples on how to use the following methods, please consult the accompanying documentation (it is vital that you read the [documentation](https://github.com/qlassiqa/alfred-workflow/blob/master/docs/Documentation.md) to get a grip on how to properly use this library).
 
 1. get_bundle()
 2. get_data()
