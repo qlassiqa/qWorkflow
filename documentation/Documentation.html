@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generated-by" content="Markdown PRO, http://markdownpro.com"/>
+<title></title>
+<style type="text/css">
+
+</style><style type="text/css">
+html,body{margin:0;padding:0;}
+body {padding: 20px}
+h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,cite,code,del,dfn,em,img,q,s,samp,small,strike,strong,sub,sup,tt,var,dd,dl,dt,li,ol,ul,fieldset,form,label,legend,button,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;font-weight:normal;font-style:normal;font-size:100%;line-height:1;font-family:inherit;}
+table{border-collapse:collapse;border-spacing:0;}
+ol,ul{list-style:none;}
+q:before,q:after,blockquote:before,blockquote:after{content:"";}
+html{overflow-y:scroll;font-size:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;}
+a:focus{outline:thin dotted;}
+a:hover,a:active{outline:0;}
+article,aside,details,figcaption,figure,footer,header,hgroup,nav,section{display:block;}
+audio,canvas,video{display:inline-block;*display:inline;*zoom:1;}
+audio:not([controls]){display:none;}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline;}
+sup{top:-0.5em;}
+sub{bottom:-0.25em;}
+img{border:0;-ms-interpolation-mode:bicubic;}
+button,input,select,textarea{font-size:100%;margin:0;vertical-align:baseline;*vertical-align:middle;}
+button,input{line-height:normal;*overflow:visible;}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
+button,input[type="button"],input[type="reset"],input[type="submit"]{cursor:pointer;-webkit-appearance:button;}
+input[type="search"]{-webkit-appearance:textfield;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;}
+input[type="search"]::-webkit-search-decoration{-webkit-appearance:none;}
+textarea{overflow:auto;vertical-align:top;}
+html,body{background-color:#ffffff;}
+body{margin:0;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:13px;font-weight:normal;line-height:18px;color:#404040;}
+.container{width:940px;margin-left:auto;margin-right:auto;zoom:1;}.container:before,.container:after{display:table;content:"";zoom:1;*display:inline;}
+.container:after{clear:both;}
+.container-fluid{position:relative;min-width:940px;padding-left:20px;padding-right:20px;zoom:1;}.container-fluid:before,.container-fluid:after{display:table;content:"";zoom:1;*display:inline;}
+.container-fluid:after{clear:both;}
+.container-fluid>.sidebar{float:left;width:220px;}
+.container-fluid>.content{margin-left:240px;}
+a{color:#0069d6;text-decoration:none;line-height:inherit;font-weight:inherit;}a:hover{color:#00438a;text-decoration:underline;}
+.pull-right{float:right;}
+.pull-left{float:left;}
+.hide{display:none;}
+.show{display:block;}
+.row{zoom:1;margin-left:-20px;}.row:before,.row:after{display:table;content:"";zoom:1;*display:inline;}
+.row:after{clear:both;}
+p{font-size:13px;font-weight:normal;line-height:18px;margin-bottom:9px;}p small{font-size:11px;color:#bfbfbf;}
+h1,h2,h3,h4,h5,h6{font-weight:bold;color:#404040;}h1 small,h2 small,h3 small,h4 small,h5 small,h6 small{color:#bfbfbf;}
+h1{margin-bottom:18px;font-size:30px;line-height:36px;}h1 small{font-size:18px;}
+h2{font-size:24px;line-height:36px;}h2 small{font-size:14px;}
+h3,h4,h5,h6{line-height:36px;}
+h3{font-size:18px;}h3 small{font-size:14px;}
+h4{font-size:16px;}h4 small{font-size:12px;}
+h5{font-size:14px;}
+h6{font-size:13px;color:#bfbfbf;text-transform:uppercase;}
+ul,ol{margin:0 0 18px 25px;}
+ul ul,ul ol,ol ol,ol ul{margin-bottom:0;}
+ul{list-style:disc;}
+ol{list-style:decimal;}
+li{line-height:18px;color:#555;}
+blockquote li{line-height:18px;color:#208080;}
+ul.unstyled{list-style:none;margin-left:0;}
+dl{margin-bottom:18px;}dl dt,dl dd{line-height:18px;}
+dl dt{font-weight:bold;}
+dl dd{margin-left:9px;}
+hr{margin:20px 0 19px;border:0;border-bottom:1px solid #eee;}
+strong{font-style:inherit;font-weight:bold;}
+em{font-style:italic;font-weight:inherit;line-height:inherit;}
+.muted{color:#bfbfbf;}
+blockquote{margin-bottom:18px;border-left:5px solid #eee;padding-left:15px;}blockquote p{font-size:14px;font-weight:300;line-height:18px;margin-bottom:0;}
+blockquote small{display:block;font-size:12px;font-weight:300;line-height:18px;color:#bfbfbf;}blockquote small:before{content:'\2014 \00A0';}
+address{display:block;line-height:18px;margin-bottom:18px;}
+code,pre{padding:0 3px 2px;font-family:Monaco, Andale Mono, Courier New, monospace;font-size:12px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
+code{padding:1px 3px;}
+pre{background-color:#f5f5f5;display:block;padding:8.5px;margin:0 0 18px;line-height:18px;font-size:12px;border:1px solid #ccc;border:1px solid rgba(0, 0, 0, 0.15);-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;white-space:pre;white-space:pre-wrap;word-wrap:break-word;}
+form{margin-bottom:18px;}
+fieldset{margin-bottom:18px;padding-top:18px;}fieldset legend{display:block;padding-left:150px;font-size:19.5px;line-height:1;color:#404040;*padding:0 0 5px 145px;*line-height:1.5;}
+form .clearfix{margin-bottom:18px;zoom:1;}form .clearfix:before,form .clearfix:after{display:table;content:"";zoom:1;*display:inline;}
+form .clearfix:after{clear:both;}
+label,input,select,textarea{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:13px;font-weight:normal;line-height:normal;}
+label{padding-top:6px;font-size:13px;line-height:18px;float:left;width:130px;text-align:right;color:#404040;}
+form .input{margin-left:150px;}
+input[type=checkbox],input[type=radio]{cursor:pointer;}
+input,textarea,select,.uneditable-input{display:inline-block;width:210px;height:18px;padding:4px;font-size:13px;line-height:18px;color:#808080;border:1px solid #ccc;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
+input[type=checkbox],input[type=radio]{width:auto;height:auto;padding:0;margin:3px 0;*margin-top:0;line-height:normal;border:none;}
+input[type=file]{background-color:#ffffff;padding:initial;border:initial;line-height:initial;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;}
+input[type=button],input[type=reset],input[type=submit]{width:auto;height:auto;}
+select,input[type=file]{height:27px;line-height:27px;*margin-top:4px;}
+select[multiple]{height:inherit;}
+textarea{height:auto;}
+.uneditable-input{background-color:#ffffff;display:block;border-color:#eee;-webkit-box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.025);-moz-box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.025);box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.025);cursor:not-allowed;}
+:-moz-placeholder{color:#bfbfbf;}
+::-webkit-input-placeholder{color:#bfbfbf;}
+input,textarea{-webkit-transition:border linear 0.2s,box-shadow linear 0.2s;-moz-transition:border linear 0.2s,box-shadow linear 0.2s;-ms-transition:border linear 0.2s,box-shadow linear 0.2s;-o-transition:border linear 0.2s,box-shadow linear 0.2s;transition:border linear 0.2s,box-shadow linear 0.2s;-webkit-box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1);-moz-box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1);box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1);}
+input:focus,textarea:focus{outline:0;border-color:rgba(82, 168, 236, 0.8);-webkit-box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1),0 0 8px rgba(82, 168, 236, 0.6);-moz-box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1),0 0 8px rgba(82, 168, 236, 0.6);box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1),0 0 8px rgba(82, 168, 236, 0.6);}
+input[type=file]:focus,input[type=checkbox]:focus,select:focus{-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;outline:1px dotted #666;}
+form div.clearfix.error{background:#fae5e3;padding:10px 0;margin:-10px 0 10px;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;}form div.clearfix.error>label,form div.clearfix.error span.help-inline,form div.clearfix.error span.help-block{color:#9d261d;}
+form div.clearfix.error input,form div.clearfix.error textarea{border-color:#c87872;-webkit-box-shadow:0 0 3px rgba(171, 41, 32, 0.25);-moz-box-shadow:0 0 3px rgba(171, 41, 32, 0.25);box-shadow:0 0 3px rgba(171, 41, 32, 0.25);}form div.clearfix.error input:focus,form div.clearfix.error textarea:focus{border-color:#b9554d;-webkit-box-shadow:0 0 6px rgba(171, 41, 32, 0.5);-moz-box-shadow:0 0 6px rgba(171, 41, 32, 0.5);box-shadow:0 0 6px rgba(171, 41, 32, 0.5);}
+form div.clearfix.error .input-prepend span.add-on,form div.clearfix.error .input-append span.add-on{background:#f4c8c5;border-color:#c87872;color:#b9554d;}
+table{width:100%;margin-bottom:18px;padding:0;border-collapse:separate;*border-collapse:collapse;font-size:13px;border:1px solid #ddd;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;}table th,table td{padding:10px 10px 9px;line-height:18px;text-align:left;}
+table th{padding-top:9px;font-weight:bold;vertical-align:middle;border-bottom:1px solid #ddd;}
+table td{vertical-align:top;}
+table th+th,table td+td{border-left:1px solid #ddd;}
+table tr+tr td{border-top:1px solid #ddd;}
+table tbody tr:first-child td:first-child{-webkit-border-radius:4px 0 0 0;-moz-border-radius:4px 0 0 0;border-radius:4px 0 0 0;}
+table tbody tr:first-child td:last-child{-webkit-border-radius:0 4px 0 0;-moz-border-radius:0 4px 0 0;border-radius:0 4px 0 0;}
+table tbody tr:last-child td:first-child{-webkit-border-radius:0 0 0 4px;-moz-border-radius:0 0 0 4px;border-radius:0 0 0 4px;}
+table tbody tr:last-child td:last-child{-webkit-border-radius:0 0 4px 0;-moz-border-radius:0 0 4px 0;border-radius:0 0 4px 0;}
+.zebra-striped tbody tr:nth-child(odd) td{background-color:#f9f9f9;}
+.zebra-striped tbody tr:hover td{background-color:#f5f5f5;}
+.zebra-striped .header{cursor:pointer;}.zebra-striped .header:after{content:"";float:right;margin-top:7px;border-width:0 4px 4px;border-style:solid;border-color:#000 transparent;visibility:hidden;}
+.zebra-striped .header:hover:after{visibility:visible;}
+footer{margin-top:17px;padding-top:17px;border-top:1px solid #eee;}
+.page-header{margin-bottom:17px;border-bottom:1px solid #ddd;-webkit-box-shadow:0 1px 0 rgba(255, 255, 255, 0.5);-moz-box-shadow:0 1px 0 rgba(255, 255, 255, 0.5);box-shadow:0 1px 0 rgba(255, 255, 255, 0.5);}.page-header h1{margin-bottom:8px;}
+.close{float:right;color:#000000;font-size:20px;font-weight:bold;line-height:13.5px;text-shadow:0 1px 0 #ffffff;filter:alpha(opacity=20);-khtml-opacity:0.2;-moz-opacity:0.2;opacity:0.2;}.close:hover{color:#000000;text-decoration:none;filter:alpha(opacity=40);-khtml-opacity:0.4;-moz-opacity:0.4;opacity:0.4;}
+
+pre {
+	padding: 0;
+	margin: 10px 0px 10px;
+	overflow: auto; /*--If the Code exceeds the width, a scrolling is available--*/
+	overflow-Y: hidden;  /*--Hides vertical scroll created by IE--*/
+}
+pre code {
+	margin: 5px;  /*--Left Margin--*/
+	padding: 0px;
+	display: block;
+    line-height: 18px;
+}
+.center { text-align:center}
+.left {text-align:left}
+.right {text-align:right}
+
+
+
+body {
+	font-family: "Lucida Grande", "Lucida Sans Unicode", verdana, geneva, sans-serif;
+	word-spacing: 1px;
+	color: #444;
+	margin: 0px 5px;
+	line-height: 18px;
+}
+
+pre {
+	border: 1px solid #999;
+	/*padding:5px;*/
+	-webkit-border-radius:6px;
+	-moz-border-radius:6px;
+	border-radius:6px;
+	background: #eee;
+}
+
+code {
+	background: #eee;
+	/*padding: 0px 4px 0px;*/
+}
+
+p {
+	margin: 15px 0;
+	line-height: 18px;
+}
+
+h1 {
+	color: #444;	
+
+	padding-bottom: 5px;
+}
+
+h2 {
+	font: 24px Arial;
+	color: #79B933;
+	margin-top:60px;
+	
+}
+
+h2 a {
+	color: #79B933;
+	text-decoration: none;
+}
+
+h2 a:hover {
+	color: #5F9128;
+}
+
+a {
+	color: #339966;
+}
+
+a:hover {
+	color: #339966;
+	text-decoration: underline;
+}
+
+h3 {
+	font: 140% Trebuchet MS;
+	margin: 10px 0;
+	margin-top: 30px;
+}
+
+ul {
+	margin: 15px 0 15px 0;
+	line-height: 25px;
+	padding: 15px 0 15px 15px;
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+	color: #79B933;
+}
+
+img {
+	padding: 1px;
+	background: #ccc;
+	border: 4px solid #f6f6f6;
+}
+
+p img {
+	float: left;
+	margin: 0 10px 0 0;
+}
+
+blockquote p {
+	font: 15px Georgia;
+	color: #555;
+	padding: 0 10% 0 0;
+	line-height: 26px;
+	letter-spacing: 0px;
+}
+</style></head>
+<body>
+<h1>Workflow Library</h1>
+
+<h3>Introduction</h3>
+
+<p>This is an AppleScript library for creating workflows with Alfred 2. This library provides an object-oriented class with functions for working with plist settings files, reading and writing data to files, generating Alfred feedback results, requesting remote data, and more.</p>
+
+<p>It was originally created by <a href="https://github.com/jdfwarrior/Workflows">David Ferguson using PHP</a>, and was rewritten by me in AppleScript to provide the same functionality to all my fellow AppleScript lovers.</p>
+
+<p>So you may be asking yourself: </p>
+
+<ul>
+<li><p><strong><em>why on Earth would I use AppleScript when I already have PHP, Python, Ruby, Bash, etc.?</em></strong> - yes, it&#39;s true, Alfred can be scripted using all those languages, but ask yourself this: <strong>are you able to control MacOS and its Apps using those languages?</strong> I&#39;m afraid not, and this is where AppleScript comes to help. </p></li>
+<li><p><strong><em>but isn&#39;t it simpler to use my PHP / Python / etc. skills and combine them with AppleScript inside Alfred?</em></strong> Actually no, it isn&#39;t simpler - I&#39;ve tried it, and it becomes really messy, not to mention that Alfred&#39;s workflow system doesn&#39;t allow that much mixing.</p></li>
+</ul>
+
+<h3>Known Limitations</h3>
+
+<p>Now, because AppleScript is a bit limited in terms of capabilities, some functionality isn&#39;t available right now, but I will try to improve this library further.</p>
+
+<ul>
+<li><p><strong>no JSON support <u>yet</u></strong> - AppleScript doesn&#39;t know anything about JSON, but I&#39;m already planning a JSON parser for AppleScript</p></li>
+<li><p><strong>bigger file size</strong> - since AppleScript requires extra coding for text manipulation and object handling, the file size is a bit large compared to the PHP equivalent; right now the size of this library is ~96kb, but will probably increase as I add new features to it</p></li>
+<li><p><strong>strict syntax for plist records</strong> - it&#39;s known that AppleScript&#39;s records are a bit clumsy since they lack so many features, that&#39;s why when saving a list of records as a PList settings file you should adhere to the following strict record notation: </p>
+
+<pre><code>{ 
+  {theKey:&quot;someKeyName&quot;, theValue: &quot;textValue&quot;}, 
+  {theKey:&quot;mynum&quot;, theValue: 2},
+  {theKey: &quot;booltest&quot;, theValue: false},
+  {theKey:&quot;na&quot;, theValue: missing value} 
+}
+</code></pre></li>
+</ul>
+
+<h3>Initialization</h3>
+
+<pre><code>set workflowFolder to do shell script &quot;pwd&quot;
+set wf to load script POSIX file (workflowFolder &amp; &quot;/workflow.scpt&quot;)
+set wf to wf&#39;s new_workflow()
+</code></pre>
+
+<p>or by specifying a bundle name:</p>
+
+<pre><code>...
+set wf to wf&#39;s new_workflow_with_bundle(&quot;com.mycompany.mybundlename&quot;)
+</code></pre>
+
+<p><strong>Explanations:</strong></p>
+
+<ul>
+<li><p>the first line determines the Alfred workflow&#39;s bundle path because this is where the &quot;workflow.scpt&quot; library should be placed in order to work</p></li>
+<li><p>the second line loads the library from the bundle&#39;s path assuming that you already placed it there</p></li>
+<li><p>the last line creates a new script object (the equivalent of a class in other languages) with all the required functionality</p></li>
+<li><p>since AppleScript doesn&#39;t support optional parameters, there are 2 constructors: <code>new_workflow()</code> with no parameters, which creates a new class that automatically fetches the bundle name from Alfred, and <code>new_workflow_with_bundle(&lt;name&gt;)</code>, which takes 1 parameter with the desired bundle name if none was specified in Alfred.</p></li>
+</ul>
+
+<h3>Methods</h3>
+
+<h4>1. get_bundle()</h4>
+
+<p>Takes no parameter and returns the value of the bundle id for the current workflow. If no value is available, then <code>missing value</code> is returned.</p>
+
+<p><em>Example:</em></p>
+
+<pre><code>wf&#39;s get_bundle()
+</code></pre>
+
+<p>output: </p>
+
+<pre><code>com.qlassiqa.iTunesRatings
+</code></pre>
+
+<h4>2. get_data()</h4>
+
+<p>Takes no parameter and returns the value of the path to the storage directory for your workflow if it is available. Returns missing value if the value isn&#39;t available.</p>
+
+<p><em>Example:</em></p>
+
+<pre><code>wf&#39;s get_data()
+</code></pre>
+
+<p>output:</p>
+
+<pre><code>/Users/qlassiqa/Library/Application Support/Alfred 2/Workflow Data/com.qlassiqa.iTunesRatings/
+</code></pre>
+
+<h4>3. get_cache()</h4>
+
+<p>Takes no parameter and returns the value of the path to the cache directory for your workflow if it is available. Returns missing value if the value isn&#39;t available.</p>
+
+<p><em>Example:</em></p>
+
+<pre><code>wf&#39;s get_cache()
+</code></pre>
+
+<p>output:</p>
+
+<pre><code>/Users/qlassiq/Library/Caches/com.runningwithcrayons.Alfred-2/Workflow Data/com.qlassiqa.iTunesRatings/
+</code></pre>
+
+<h4>4. get_path()</h4>
+
+<p>Takes no parameter and returns the value of the path to the current folder for your workflow if it is available. Returns missing value if the value isn&#39;t available.</p>
+
+<p><em>Example:</em></p>
+
+<pre><code>wf&#39;s get_path()
+</code></pre>
+
+<p>output:</p>
+
+<pre><code>/Users/qlassiqa/Dropbox/Public/Alfred2/Alfred.alfredpreferences/workflows/user.workflow.3BA9A8FC-75DB-494F-926A-CE19221E1211/
+</code></pre>
+
+<h4>5. get_home()</h4>
+
+<p>Takes no parameter and returns the value of the home path for the current user. Returns missing value if the value isn&#39;t available.</p>
+
+<p><em>Example:</em></p>
+
+<pre><code>wf&#39;s get_path()
+</code></pre>
+
+<p>output:</p>
+
+<pre><code>/Users/qlassiqa
+</code></pre>
+
+<h4>6. set_value(key, value, plistfile)</h4>
+
+<p>Save values to a specified plist. If the plist file doesn&#39;t exist, it will be created in the workflow&#39;s data folder.</p>
+
+<p>If the first parameter is a record list then the second parameter becomes the plist file to save to. Or you could just ignore this and use the <code>set_values</code> method that takes only 2 parameters for this scenario (presented next).</p>
+
+<p>If the first parameter is text, then it is assumed that the first parameter is the key, the second parameter is the value, and the third parameter is the plist file to save the data to.</p>
+
+<p><em>Example:</em></p>
+
+<pre><code># add a username key with a text value
+1. wf&#39;s set_value(&quot;username&quot;, &quot;mike&quot;, &quot;settings.plist&quot;)
+
+# add a key with a boolean value
+2. wf&#39;s set_value(&quot;default&quot;, true, &quot;settings.plist&quot;)
+
+# add a key with a number value
+3. wf&#39;s set_value(&quot;age&quot;, 23, &quot;settings.plist&quot;)
+
+# add a key with a real number value
+4. wf&#39;s set_value(&quot;weight&quot;, 65.3, &quot;settings.plist&quot;)
+
+# doesn&#39;t add anything since missing value was passed
+5. wf&#39;s set_value(&quot;none&quot;, missing value, &quot;settings.plist&quot;)
+
+# add a list with mixed values
+6. wf&#39;s set_value(&quot;my first list&quot;, {1, 2, 3, &quot;bob&quot;}, &quot;settings.plist&quot;)
+
+# add a list with values and a sublist
+7. wf&#39;s set_value(&quot;my second list&quot;, {1, 2, 3, {&quot;bob&quot;, &quot;anne&quot;}}, &quot;settings.plist&quot;)
+
+# replace previously created key
+8. wf&#39;s set_value(&quot;username&quot;, &quot;john&quot;, &quot;settings.plist&quot;)
+</code></pre>
+
+<p>output:</p>
+
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;plist version=&quot;1.0&quot;&gt;
+&lt;dict&gt;
+    &lt;key&gt;age&lt;/key&gt;
+    &lt;integer&gt;23&lt;/integer&gt;
+    &lt;key&gt;default&lt;/key&gt;
+    &lt;true/&gt;
+    &lt;key&gt;my first list&lt;/key&gt;
+    &lt;array&gt;
+        &lt;integer&gt;1&lt;/integer&gt;
+        &lt;integer&gt;2&lt;/integer&gt;
+        &lt;integer&gt;3&lt;/integer&gt;
+        &lt;string&gt;bob&lt;/string&gt;
+    &lt;/array&gt;
+    &lt;key&gt;my second list&lt;/key&gt;
+    &lt;array&gt;
+        &lt;integer&gt;1&lt;/integer&gt;
+        &lt;integer&gt;2&lt;/integer&gt;
+        &lt;integer&gt;3&lt;/integer&gt;
+        &lt;array&gt;
+            &lt;string&gt;bob&lt;/string&gt;
+            &lt;string&gt;anne&lt;/string&gt;
+        &lt;/array&gt;
+    &lt;/array&gt;
+    &lt;key&gt;username&lt;/key&gt;
+    &lt;string&gt;john&lt;/string&gt;
+    &lt;key&gt;weight&lt;/key&gt;
+    &lt;real&gt;65.299999999999997&lt;/real&gt;
+&lt;/dict&gt;
+&lt;/plist&gt;
+</code></pre>
+
+<h4>7. set_values(listofrecords, plistfile)</h4>
+
+<p>Save a list of records to a specified plist. If the plist file doesn&#39;t exist, it will be created in the workflow&#39;s data folder.</p>
+
+<p>Each record must adhere to the following notation:</p>
+
+<p><code>{theKey: &quot;somekeyname&quot;, theValue: 13}</code></p>
+
+<p><em>Example:</em></p>
+
+<pre><code>set theList to {{theKey:&quot;favcolor&quot;, theValue:&quot;red&quot;}, {theKey:&quot;hobbies&quot;, theValue:{&quot;sports&quot;, &quot;music&quot;}}}
+wf&#39;s set_values(theList, &quot;settings.plist&quot;)
+</code></pre>
+
+<p>output:</p>
+
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;plist version=&quot;1.0&quot;&gt;
+&lt;dict&gt;
+    &lt;key&gt;favcolor&lt;/key&gt;
+    &lt;string&gt;red&lt;/string&gt;
+    &lt;key&gt;hobbies&lt;/key&gt;
+    &lt;array&gt;
+        &lt;string&gt;sports&lt;/string&gt;
+        &lt;string&gt;music&lt;/string&gt;
+    &lt;/array&gt;
+&lt;/dict&gt;
+&lt;/plist&gt;
+</code></pre>
+
+<h4>8. get_value(key, plistfile)</h4>
+
+<p>Read a value from the specified plist. Note that if the plist file cannot be located, the script will automatically create an empty plist file in the data folder of the workflow.</p>
+
+<p><em>Example:</em></p>
+
+<pre><code># get a simple value
+1. wf&#39;s get_value(&quot;username&quot;, &quot;settings.plist&quot;)
+
+# get a simple list (see example plist on method [5])
+2. wf&#39;s get_value(&quot;my first list&quot;, &quot;settings.plist&quot;)
+
+# get a list containing a sublist (see example plist on method [5])
+3. wf&#39;s get_value(&quot;my second list&quot;, &quot;settings.plist&quot;)
+</code></pre>
+
+<p>output:</p>
+
+<pre><code>1. mike
+2. {1,2,3,&quot;bob&quot;}
+3. {1,2,3,{&quot;bob&quot;,&quot;anne&quot;}}
+</code></pre>
+
+<h4>9. request(url)</h4>
+
+<p>Read data from a remote file/url, essentially a shortcut for curl</p>
+
+<p><em>Example:</em></p>
+
+<pre><code># get a json file from twitter
+1. wf&#39;s request(&quot;http://mysite.com/search.json?q=json&amp;rpp=5&quot;)
+
+# get the contents of a website
+2. wf&#39;s request(&quot;http://www.adobe.com/&quot;)
+</code></pre>
+
+<p>output:</p>
+
+<pre><code>1. {
+    &quot;name&quot;: &quot;JSON.sh&quot;,
+    &quot;version&quot;: &quot;0.1.4&quot;,
+    &quot;description&quot;: &quot;JSON parser written in bash&quot;,
+    &quot;homepage&quot;: &quot;http://github.com/dominictarr/JSON.sh&quot;,
+    &quot;repository&quot;: {
+        &quot;type&quot;: &quot;git&quot;,
+        &quot;url&quot;: &quot;https://github.com/dominictarr/JSON.sh.git&quot;
+    },
+    &quot;bin&quot;: {
+        &quot;JSON.sh&quot;: &quot;./JSON.sh&quot;
+    },
+    &quot;dependencies&quot;: {},
+    &quot;devDependencies&quot;: {},
+    &quot;author&quot;: &quot;Dominic Tarr&quot;,
+    &quot;scripts&quot;: { &quot;test&quot;: &quot;./all-tests.sh&quot; }
+}
+
+
+2. the raw html contents of Adobe&#39;s website
+</code></pre>
+
+<h4>10. mdfind(query)</h4>
+
+<p>Allows searching the local hard drive using mdfind, and returns a list of all found paths.</p>
+
+<p><em>Example:</em></p>
+
+<pre><code>wf&#39;s mdfind(&quot;php.ini&quot;)
+</code></pre>
+
+<p>output:</p>
+
+<pre><code>{
+    &quot;/private/etc/php.ini.default&quot;,
+    &quot;/usr/local/php/lib/php.ini&quot;,
+    ...
+}
+</code></pre>
+
+<h4>11. write_file(textorlist, cachefile)</h4>
+
+<p>Accepts data and a string file name to store data to local file. Each call to this method will overwrite the file if it already exists.</p>
+
+<p><strong>Note:</strong> due to AppleScript&#39;s lack of JSON support, this method can write to file only a piece of text, a value that can be converted to text, or a list that doesn&#39;t contain sublists or records.</p>
+
+<p><em>Example:</em></p>
+
+<pre><code>1. wf&#39;s write_file(&quot;testing&quot; &amp; return &amp; &quot;string&quot;, &quot;test.dat&quot;)
+2. wf&#39;s write_file(12.5, &quot;test.dat&quot;)
+</code></pre>
+
+<p>output:</p>
+
+<pre><code>1. testing
+string
+
+2. 12.5
+</code></pre>
+
+<h4>12. read_file(cachefile)</h4>
+
+<p>Returns data from a local cache file, or missing value if the file doesn&#39;t exist. Note that if the file exists but is empty, it will be automatically deleted to clean up the workflow folder.</p>
+
+<p><em>Example:</em></p>
+
+<pre><code>wf&#39;s write_file(12.5, &quot;test.dat&quot;)
+wf&#39;s read_file(&quot;test.dat&quot;)
+</code></pre>
+
+<p>output:</p>
+
+<pre><code>&quot;12.5&quot;
+</code></pre>
+
+<h4>13. get_result</h4>
+
+<p>Creates a new result item that is cached within the class object. This set of results is available via the get<em>results() functions, or, can be formatted and returned as XML via the to</em>xml() function.</p>
+
+<p><strong>Note:</strong> this method uses the labeled parameter syntax in AppleScript (see example), and takes the following &#39;camelCase&#39; parameters:</p>
+
+<ul>
+<li><p><strong>theUid</strong>: the uid attribute is a value that is used to help Alfred learn about your results. You know that Alfred learns based on the items you use the most. That same mechanism can be used in feedback results. Give your results a unique identifier and Alfred will learn which ones you use the most and prioritize them by moving them up in the result list</p></li>
+<li><p><strong>theArg</strong>: the arg attribute is the value that is passed to the next portion of the workflow when the result item is selected in the Alfred results list. So if you pressed enter on a result, the arg value would be passed to a shell script, applescript, or any of the other Action items</p></li>
+<li><p><strong>theTitle</strong>: the title element is the value that is shown in large text as the title for the result item. This is the main text/title shown in the results list</p></li>
+<li><p><strong>theSubtitle</strong>: the subtitle element is the value shown under the title in the results list. When performing normal searches within Alfred, this is the area where you would normally see the file path</p></li>
+<li><p><strong>theAutocomplete</strong>: the autocomplete attribute is only used when the valid attribute has been set to <code>false</code>. When attempting to action an item that has the valid attribute set to &#39;no&#39; and an autocomplete value is specified, the autocomplete value is inserted into the Alfred window. When using this attribute, the arg attribute is ignored</p></li>
+<li><p><strong>theType</strong>: the type attribute allows you to specify what type of result you are generating. Currently, the only value available for this attribute is &quot;file&quot;. This will allow you to specify that the feedback item is a file and allows you to use Result Actions on the feedback item</p></li>
+<li><p><strong>theIcon</strong>: the icon element allows you to specify the icon to use for your result item. This can be a file located in your workflow directory, an icon of a file type on your local machine, or the icon of a specific file on your system. To use the icons of a specific file type you use this syntax <code>&quot;filetype:public.folder&quot;</code>. To use the icons of another folder/file you use this syntax <code>&quot;fileicon:/Applications&quot;</code>. To use an icon inside a subfolder located within the workflow you use this syntax <code>&quot;subfolder/icon.png&quot;</code>.</p></li>
+</ul>
+
+<p><em>Example:</em> (the following code was separated on different lines for easier reading, but should be written on a single line or separated using the &quot;¬&quot; AppleScript reserverd character.</p>
+
+<pre><code>1. get_result of wf without isValid given 
+    theUid:&quot;alfred&quot;, 
+    theArg:&quot;alfredapp&quot;, 
+    theTitle:&quot;Alfred&quot;, 
+    theAutocomplete:&quot;Alfred&quot;, 
+    theSubtitle:&quot;/Applications/Alfred.app&quot;, 
+    theIcon:&quot;fileicon:/Applications/Alfred 2.app&quot;, 
+    theType:&quot;Alfredapp&quot;
+
+2. get_result of wf with isValid given
+    theUid:&quot;r9996&quot;,
+    theArg:5,
+    theTitle:&quot;Alfred&quot;,
+    theSubtitle:&quot;&quot;,
+    theAutocomplete:missing value,
+    theIcon:&quot;icon.png&quot;,
+    theType:missing value
+</code></pre>
+
+<p>output:</p>
+
+<pre><code>1. {theUid:&quot;alfred&quot;, theArg:&quot;alfredapp&quot;, theTitle:&quot;Alfred&quot;, theSubtitle:&quot;/Applications/Alfred.app&quot;, theIcon:&quot;fileicon:/Applications/Alfred 2.app&quot;, isValid:false, theAutocomplete:&quot;Alfred&quot;, theType:&quot;Alfredapp&quot;}
+
+2. {theUid:&quot;r9996&quot;, theArg:5, theTitle:&quot;Alfred&quot;, theSubtitle:&quot;&quot;, theIcon:&quot;icon.png&quot;, isValid:true, theAutocomplete:&quot;&quot;, theType:missing value}
+</code></pre>
+
+<p><strong>Note:</strong> any of the above parameters can accept empty strings or missing values.</p>
+
+<h4>14. get_results()</h4>
+
+<p>Returns a list of available result items from the class&#39; internal cache.</p>
+
+<p><em>Example:</em></p>
+
+<pre><code>get_result of wf without isValid given theUid:&quot;alfred&quot;, theArg:&quot;alfredapp&quot;, theTitle:&quot;Alfred&quot;, theAutocomplete:&quot;Alfred&quot;, theSubtitle:&quot;/Applications/Alfred.app&quot;, theIcon:&quot;fileicon:/Applications/Alfred 2.app&quot;, theType:&quot;Alfredapp&quot;
+
+get_result of wf with isValid given theUid:&quot;r9996&quot;, theArg:5, theTitle:&quot;Alfred&quot;, theSubtitle:&quot;&quot;, theAutocomplete:missing value, theIcon:&quot;icon.png&quot;, theType:missing value
+
+wf&#39;s get_results()
+</code></pre>
+
+<p>output:</p>
+
+<pre><code>{
+    {theUid:&quot;alfred&quot;, theArg:&quot;alfredapp&quot;, theTitle:&quot;Alfred&quot;, theSubtitle:&quot;/Applications/Alfred.app&quot;, theIcon:&quot;fileicon:/Applications/Alfred 2.app&quot;, isValid:false, theAutocomplete:&quot;Alfred&quot;, theType:&quot;Alfredapp&quot;}, 
+    {theUid:&quot;r9996&quot;, theArg:5, theTitle:&quot;Alfred&quot;, theSubtitle:&quot;&quot;, theIcon:&quot;icon.png&quot;, isValid:true, theAutocomplete:&quot;&quot;, theType:missing value}
+}
+</code></pre>
+
+<h4>15. to_xml(listofrecords)</h4>
+
+<p>Convert a list of records into XML format. Passing an empty string or <code>missing value</code> as the parameter will make the method use the class&#39; internal cache results as the list of records (this is built using the <code>get_result</code> method).</p>
+
+<p><em>Example:</em></p>
+
+<pre><code>get_result of wf without isValid given theUid:&quot;alfred&quot;, theArg:&quot;alfredapp&quot;, theTitle:&quot;Alfred&quot;, theAutocomplete:&quot;Alfred&quot;, theSubtitle:&quot;/Applications/Alfred.app&quot;, theIcon:&quot;fileicon:/Applications/Alfred 2.app&quot;, theType:&quot;Alfredapp&quot;
+
+get_result of wf with isValid given theUid:&quot;r9996&quot;, theArg:5, theTitle:&quot;Alfred&quot;, theSubtitle:&quot;&quot;, theAutocomplete:missing value, theIcon:&quot;icon.png&quot;, theType:missing value
+
+wf&#39;s to_xml(&quot;&quot;)
+</code></pre>
+
+<p>output:</p>
+
+<pre><code>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;items&gt;
+    &lt;item uid=&quot;alfred&quot; arg=&quot;alfredapp&quot; valid=&quot;no&quot; autocomplete=&quot;Alfred&quot; type=&quot;Alfredapp&quot;&gt;
+        &lt;title&gt;Alfred&lt;/title&gt;
+        &lt;subtitle&gt;/Applications/Alfred.app&lt;/subtitle&gt;
+        &lt;icon type=&quot;fileicon&quot;&gt;/Applications/Alfred 2.app&lt;/icon&gt;
+    &lt;/item&gt;
+    &lt;item uid=&quot;r9996&quot; arg=&quot;5&quot;&gt;
+        &lt;title&gt;Alfred&lt;/title&gt;
+        &lt;subtitle&gt;&lt;/subtitle&gt;
+        &lt;icon&gt;icon.png&lt;/icon&gt;
+    &lt;/item&gt;
+&lt;/items&gt;
+</code></pre>
+
+</body>
+</html>

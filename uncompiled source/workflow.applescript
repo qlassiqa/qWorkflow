@@ -59,7 +59,8 @@ on new_workflow_with_bundle(bundleid)
 			set my _home to do shell script "printf $HOME"
 			
 			# create the path to the current Applescript's 'info.plist' file
-			set _infoPlist to my q_script_path() & "info.plist"
+			set _infoPlist to my q_script_path(":") & "info.plist"
+			log _infoPlist
 			
 			# if the 'info.plist' file exists, start reading it
 			if my q_file_exists(_infoPlist) then
@@ -268,7 +269,7 @@ on new_workflow_with_bundle(bundleid)
 						
 						# and create (or change) the required entry with the class type
 						# of the key value, the name of the key and its value
-						make new property list item at end of property list items of contents of b Â
+						make new property list item at end of property list items of contents of b Â¬
 							with properties {kind:(class of (theValue of r)), name:(theKey of r), value:(theValue of r)}
 					end repeat
 				else
@@ -284,7 +285,7 @@ on new_workflow_with_bundle(bundleid)
 					else
 						set x to b
 					end if
-					make new property list item at end of property list items of contents of c Â
+					make new property list item at end of property list items of contents of c Â¬
 						with properties {kind:(class of x), name:a, value:x}
 				end if
 			end tell
@@ -397,7 +398,7 @@ on new_workflow_with_bundle(bundleid)
 			try
 				set f to open for access b with write permission
 				set eof f to 0
-				write a to f as Çclass utf8È
+				write a to f as Â«class utf8Â»
 				close access b
 				return true
 			on error
@@ -484,7 +485,7 @@ on new_workflow_with_bundle(bundleid)
 		on _make_plist(plistPath)
 			tell application "System Events"
 				set parentElement to make new property list item with properties {kind:record}
-				set plistFile to Â
+				set plistFile to Â¬
 					make new property list file with properties {contents:parentElement, name:plistPath}
 			end tell
 			return plistFile
@@ -565,9 +566,16 @@ on q_split(s, delim)
 end q_split
 
 ### get current script's containing folder
-on q_script_path()
+on q_script_path(theType)
 	set p to my q_split(path to me as text, ":")
-	return my q_join(items 1 thru -2 of p, ":") & ":"
+	set p to my q_join(items 1 thru -2 of p, ":") & ":"
+	if theType is "HFS" or theType is ":" then
+		if p does not end with ":" then set p to p & ":"
+	else
+		set p to POSIX path of p
+		if p does not end with "/" then set p to p & "/"
+	end if
+	return p
 end q_script_path
 
 ### handler to check if a file exists
