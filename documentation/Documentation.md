@@ -16,7 +16,7 @@ Now, because AppleScript is a bit limited in terms of capabilities, some functio
 
 * **no JSON support <u>yet</u>** - AppleScript doesn't know anything about JSON, but I'm already planning a JSON parser for AppleScript
 
-* **bigger file size** - since AppleScript requires extra coding for text manipulation and object handling, the file size is a bit large compared to the PHP equivalent; right now the size of this library is ~96kb, but will probably increase as I add new features to it
+* **bigger file size** - since AppleScript requires extra coding for text manipulation and object handling, the file size is a bit large compared to the PHP equivalent, and it will probably increase as I add new features to it
  
 * **strict syntax for plist records** - it's known that AppleScript's records are a bit clumsy since they lack so many features, that's why when saving a list of records as a PList settings file you should adhere to the following strict record notation: 
 
@@ -122,7 +122,7 @@ output:
 ```
 
 ####6. set_value(key, value, plistfile)
-Save values to a specified plist. If the plist file doesn't exist, it will be created in the workflow's data folder.
+Save values to a specified plist. If the plist file doesn't exist, it will be created in the workflow's data folder, and if the plistfile parameter is `missing value` or an empty string, a default "settings.plist" file will be created.
 
 If the first parameter is a record list then the second parameter becomes the plist file to save to. Or you could just ignore this and use the `set_values` method that takes only 2 parameters for this scenario (presented next).
 
@@ -130,13 +130,13 @@ If the first parameter is text, then it is assumed that the first parameter is t
 
 *Example:*
 ```
-# add a username key with a text value
-1. wf's set_value("username", "mike", "settings.plist")
+# add a username key with a text value to a default "settings.plist" file
+1. wf's set_value("username", "mike", "")
 
 # add a key with a boolean value
-2. wf's set_value("default", true, "settings.plist")
+2. wf's set_value("default", true, "")
 
-# add a key with a number value
+# add a key with a number value to a specific plist file
 3. wf's set_value("age", 23, "settings.plist")
 
 # add a key with a real number value
@@ -190,7 +190,7 @@ output:
 ```
 
 ####7. set_values(listofrecords, plistfile)
-Save a list of records to a specified plist. If the plist file doesn't exist, it will be created in the workflow's data folder.
+Save a list of records to a specified plist. If the plist file doesn't exist, it will be created in the workflow's data folder, and if the plistfile parameter is `missing value` or an empty string, a default "settings.plist" file will be created.
 
 Each record must adhere to the following notation:
 
@@ -219,12 +219,12 @@ output:
 ```
 
 ####8. get_value(key, plistfile)
-Read a value from the specified plist. Note that if the plist file cannot be located, the script will automatically create an empty plist file in the data folder of the workflow.
+Read a value from the specified plist. Note that if the plist file cannot be located, the script will automatically create an empty plist file in the data folder of the workflow. Also, if the plistfile parameter is `missing value` or an empty string, a default "settings.plist" file will be created.
 
 *Example:*
 ```
-# get a simple value
-1. wf's get_value("username", "settings.plist")
+# get a simple value from the default "settings.plist" file
+1. wf's get_value("username", "")
 
 # get a simple list (see example plist on method [5])
 2. wf's get_value("my first list", "settings.plist")

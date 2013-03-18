@@ -247,7 +247,7 @@ blockquote p {
 
 <ul>
 <li><p><strong>no JSON support <u>yet</u></strong> - AppleScript doesn&#39;t know anything about JSON, but I&#39;m already planning a JSON parser for AppleScript</p></li>
-<li><p><strong>bigger file size</strong> - since AppleScript requires extra coding for text manipulation and object handling, the file size is a bit large compared to the PHP equivalent; right now the size of this library is ~96kb, but will probably increase as I add new features to it</p></li>
+<li><p><strong>bigger file size</strong> - since AppleScript requires extra coding for text manipulation and object handling, the file size is a bit large compared to the PHP equivalent, and it will probably increase as I add new features to it</p></li>
 <li><p><strong>strict syntax for plist records</strong> - it&#39;s known that AppleScript&#39;s records are a bit clumsy since they lack so many features, that&#39;s why when saving a list of records as a PList settings file you should adhere to the following strict record notation: </p>
 
 <pre><code>{ 
@@ -355,7 +355,7 @@ set wf to wf&#39;s new_workflow_with_bundle(&quot;com.mycompany.mybundlename&quo
 
 <h4>6. set_value(key, value, plistfile)</h4>
 
-<p>Save values to a specified plist. If the plist file doesn&#39;t exist, it will be created in the workflow&#39;s data folder.</p>
+<p>Save values to a specified plist. If the plist file doesn&#39;t exist, it will be created in the workflow&#39;s data folder, and if the plistfile parameter is <code>missing value</code> or an empty string, a default &quot;settings.plist&quot; file will be created.</p>
 
 <p>If the first parameter is a record list then the second parameter becomes the plist file to save to. Or you could just ignore this and use the <code>set_values</code> method that takes only 2 parameters for this scenario (presented next).</p>
 
@@ -363,13 +363,13 @@ set wf to wf&#39;s new_workflow_with_bundle(&quot;com.mycompany.mybundlename&quo
 
 <p><em>Example:</em></p>
 
-<pre><code># add a username key with a text value
-1. wf&#39;s set_value(&quot;username&quot;, &quot;mike&quot;, &quot;settings.plist&quot;)
+<pre><code># add a username key with a text value to a default &quot;settings.plist&quot; file
+1. wf&#39;s set_value(&quot;username&quot;, &quot;mike&quot;, &quot;&quot;)
 
 # add a key with a boolean value
-2. wf&#39;s set_value(&quot;default&quot;, true, &quot;settings.plist&quot;)
+2. wf&#39;s set_value(&quot;default&quot;, true, &quot;&quot;)
 
-# add a key with a number value
+# add a key with a number value to a specific plist file
 3. wf&#39;s set_value(&quot;age&quot;, 23, &quot;settings.plist&quot;)
 
 # add a key with a real number value
@@ -424,7 +424,7 @@ set wf to wf&#39;s new_workflow_with_bundle(&quot;com.mycompany.mybundlename&quo
 
 <h4>7. set_values(listofrecords, plistfile)</h4>
 
-<p>Save a list of records to a specified plist. If the plist file doesn&#39;t exist, it will be created in the workflow&#39;s data folder.</p>
+<p>Save a list of records to a specified plist. If the plist file doesn&#39;t exist, it will be created in the workflow&#39;s data folder, and if the plistfile parameter is <code>missing value</code> or an empty string, a default &quot;settings.plist&quot; file will be created.</p>
 
 <p>Each record must adhere to the following notation:</p>
 
@@ -454,12 +454,12 @@ wf&#39;s set_values(theList, &quot;settings.plist&quot;)
 
 <h4>8. get_value(key, plistfile)</h4>
 
-<p>Read a value from the specified plist. Note that if the plist file cannot be located, the script will automatically create an empty plist file in the data folder of the workflow.</p>
+<p>Read a value from the specified plist. Note that if the plist file cannot be located, the script will automatically create an empty plist file in the data folder of the workflow. Also, if the plistfile parameter is <code>missing value</code> or an empty string, a default &quot;settings.plist&quot; file will be created.</p>
 
 <p><em>Example:</em></p>
 
-<pre><code># get a simple value
-1. wf&#39;s get_value(&quot;username&quot;, &quot;settings.plist&quot;)
+<pre><code># get a simple value from the default &quot;settings.plist&quot; file
+1. wf&#39;s get_value(&quot;username&quot;, &quot;&quot;)
 
 # get a simple list (see example plist on method [5])
 2. wf&#39;s get_value(&quot;my first list&quot;, &quot;settings.plist&quot;)

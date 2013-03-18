@@ -4,10 +4,10 @@ Description:			This AppleScript class provides several useful functions for retr
 					and formatting data to be used with Alfred 2 Workflow.
 Author:				Ursan Razvan
 Original Source:		https://github.com/jdfwarrior/Workflows  (written in PHP by David Ferguson)
-Revised: 			17 March 2013
-Version: 			0.1
+Revised: 			18 March 2013
+Version: 			0.2
 *)
- 
+
 -- @description
 -- Handler for creating new Workflow script objects (mimics classes and constructors from OOP)
 --
@@ -201,20 +201,20 @@ on new_workflow_with_bundle(bundleid)
 			repeat with itemRef in a
 				set r to contents of itemRef
 				set xml to xml & tab & "<item"
-				set xml to xml & " uid=\"" & (theUid of r) & "\""
-				set xml to xml & " arg=\"" & (theArg of r) & "\""
+				set xml to xml & " uid=\"" & my q_encode(theUid of r) & "\""
+				set xml to xml & " arg=\"" & my q_encode(theArg of r) & "\""
 				if isValid of r is false then
 					set xml to xml & " valid=\"no\""
 					if not my q_is_empty(theAutocomplete of r) then
-						set xml to xml & " autocomplete=\"" & (theAutocomplete of r) & "\""
+						set xml to xml & " autocomplete=\"" & my q_encode(theAutocomplete of r) & "\""
 					end if
 				end if
 				if not my q_is_empty(theType of r) then
 					set xml to xml & " type=\"" & (theType of r) & "\""
 				end if
 				set xml to xml & ">" & return
-				set xml to xml & tab2 & "<title>" & (theTitle of r) & "</title>" & return
-				set xml to xml & tab2 & "<subtitle>" & (theSubtitle of r) & "</subtitle>" & return
+				set xml to xml & tab2 & "<title>" & my q_encode(theTitle of r) & "</title>" & return
+				set xml to xml & tab2 & "<subtitle>" & my q_encode(theSubtitle of r) & "</subtitle>" & return
 				
 				set ic to theIcon of r
 				if not my q_is_empty(ic) then
@@ -226,7 +226,7 @@ on new_workflow_with_bundle(bundleid)
 						set xml to xml & " type=\"filetype\""
 						set ic to (items 10 thru -1 of ic as text)
 					end if
-					set xml to xml & ">" & ic & "</icon>" & return
+					set xml to xml & ">" & my q_encode(ic) & "</icon>" & return
 				end if
 				set xml to xml & tab & "</item>" & return
 			end repeat
@@ -269,7 +269,7 @@ on new_workflow_with_bundle(bundleid)
 						
 						# and create (or change) the required entry with the class type
 						# of the key value, the name of the key and its value
-						make new property list item at end of property list items of contents of b Â
+						make new property list item at end of property list items of contents of b Â¬
 							with properties {kind:(class of (theValue of r)), name:(theKey of r), value:(theValue of r)}
 					end repeat
 				else
@@ -285,7 +285,7 @@ on new_workflow_with_bundle(bundleid)
 					else
 						set x to b
 					end if
-					make new property list item at end of property list items of contents of c Â
+					make new property list item at end of property list items of contents of c Â¬
 						with properties {kind:(class of x), name:a, value:x}
 				end if
 			end tell
@@ -398,7 +398,7 @@ on new_workflow_with_bundle(bundleid)
 			try
 				set f to open for access b with write permission
 				set eof f to 0
-				write a to f as Çclass utf8È
+				write a to f as Â«class utf8Â»
 				close access b
 				return true
 			on error
@@ -485,7 +485,7 @@ on new_workflow_with_bundle(bundleid)
 		on _make_plist(plistPath)
 			tell application "System Events"
 				set parentElement to make new property list item with properties {kind:record}
-				set plistFile to Â
+				set plistFile to Â¬
 					make new property list file with properties {contents:parentElement, name:plistPath}
 			end tell
 			return plistFile
@@ -500,6 +500,9 @@ on new_workflow_with_bundle(bundleid)
 		-- @param $plist - boolean indicating whether it should create a new plist file or a plain file
 		--
 		on _get_location at pathOrName given plist:isPlist
+			# if no path or name was provided, then use a default "settings.plist" file
+			if pathOrName is missing value or my q_is_empty(pathOrName) then set pathOrName to "settings.plist"
+			
 			if my q_file_exists(pathOrName) then
 				# pathOrName is a complete file path value, so nothing to do here,
 				# otherwise assume it's a file name and not a path
@@ -662,3 +665,28 @@ on q_clean_list(lst)
 	end repeat
 	return l
 end q_clean_list
+
+### encodes invalid XML characters
+on q_encode(str)
+	if class of str is not text or my q_is_empty(str) then return str
+	set s to ""
+	repeat with sRef in str
+		set c to contents of sRef
+		if c is in {"&", "'", "\"", "<", ">"} then
+			if c is "&" then
+				set s to s & "&amp;"
+			else if c is "'" then
+				set s to s & "&apos;"
+			else if c is "\"" then
+				set s to s & "&quot;"
+			else if c is "<" then
+				set s to s & "&lt;"
+			else if c is ">" then
+				set s to s & "&gt;"
+			end if
+		else
+			set s to s & c
+		end if
+	end repeat
+	return s
+end q_encode
