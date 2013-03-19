@@ -59,8 +59,7 @@ on new_workflow_with_bundle(bundleid)
 			set my _home to do shell script "printf $HOME"
 			
 			# create the path to the current Applescript's 'info.plist' file
-			set _infoPlist to my q_script_path(":") & "info.plist"
-			log _infoPlist
+			set _infoPlist to _path & "info.plist"
 			
 			# if the 'info.plist' file exists, start reading it
 			if my q_file_exists(_infoPlist) then
@@ -567,19 +566,6 @@ on q_split(s, delim)
 	set AppleScript's text item delimiters to oldDelims
 	return output
 end q_split
-
-### get current script's containing folder
-on q_script_path(theType)
-	set p to my q_split(path to me as text, ":")
-	set p to my q_join(items 1 thru -2 of p, ":") & ":"
-	if theType is "HFS" or theType is ":" then
-		if p does not end with ":" then set p to p & ":"
-	else
-		set p to POSIX path of p
-		if p does not end with "/" then set p to p & "/"
-	end if
-	return p
-end q_script_path
 
 ### handler to check if a file exists
 on q_file_exists(theFile)
