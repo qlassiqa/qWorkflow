@@ -1,9 +1,9 @@
 #Workflow Library
 
-###Introduction
-This is an AppleScript library for creating workflows with Alfred 2. This library provides an object-oriented class with functions for working with plist settings files, reading and writing data to files, generating Alfred feedback results, requesting remote data, and more.
+##A. Introduction
+This is an AppleScript library for creating workflows with Alfred 2. This library provides an object-oriented class with functions for working with plist settings files, reading and writing data to files, generating Alfred feedback results, requesting remote data, and more (make sure you read the [DOCUMENTATION](https://github.com/qlassiqa/alfred-workflow/blob/master/documentation/Documentation.md) to get a grip on how to properly use this library).
 
-It was originally created by [David Ferguson using PHP](https://github.com/jdfwarrior/Workflows), and was rewritten by me in AppleScript to provide the same functionality to all my fellow AppleScript lovers.
+It was originally created by [David Ferguson using PHP](https://github.com/jdfwarrior/Workflows), and was entirely rewritten by me using AppleScript to provide the same functionality to all my fellow AppleScript lovers.
 
 So you may be asking yourself: 
 
@@ -13,7 +13,7 @@ So you may be asking yourself:
 
 **NOTE:** the `compiled source` folder contains the ready-to-use library script (the file inside this folder should be put inside your Alfred workflow's folder); the `uncompiled source` folder contains the plain .applescript file that you can view online, and it contains fully commented code to better understand what I did there.
 
-###Known Limitations
+##B. Known Limitations
 Now, because AppleScript is a bit limited in terms of capabilities, some functionality isn't available right now, but I will try to improve this library further.
 
 * **no JSON support <u>yet</u>** - AppleScript doesn't know anything about JSON, but I'm already planning a JSON parser for AppleScript
@@ -32,7 +32,17 @@ Now, because AppleScript is a bit limited in terms of capabilities, some functio
 	```
 
 
-###Initialization
+##C. Features
+There are a lot of things you can do with this library to make your life a lot easier when creating & programming your Alfred Workflows, so here's a list of the most important features (the list will grow while I improve the library):
+
+* object-oriented approach to write less & more readable code
+* internal workflow introspection (finding the bundle ID, cache & storage paths)
+* generate Alfred-compatible XML feedback with ease
+* saving & retrieving workflow-related settings
+* remote data requests
+* various internal utilities that improve AppleScript (string manipulation, file system utilities)
+
+##D. Initialization
 
 ```
 set workflowFolder to do shell script "pwd"
@@ -56,8 +66,8 @@ set wf to wf's new_workflow_with_bundle("com.mycompany.mybundlename")
 
 * since AppleScript doesn't support optional parameters, there are 2 constructors: `new_workflow()` with no parameters, which creates a new class that automatically fetches the bundle name from Alfred, and `new_workflow_with_bundle(<name>)`, which takes 1 parameter with the desired bundle name if none was specified in Alfred.
 
-###Methods
-For more info, tips and examples on how to use the following methods, please consult the accompanying documentation (it is vital that you read the [DOCUMENTATION](https://github.com/qlassiqa/alfred-workflow/blob/master/documentation/Documentation.md) to get a grip on how to properly use this library).
+##E. Methods
+For more info, tips and examples on how to use the following methods, please consult the accompanying documentation (again, it is vital that you read the [DOCUMENTATION](https://github.com/qlassiqa/alfred-workflow/blob/master/documentation/Documentation.md) to get a grip on how to properly use this library).
 
 1. get_bundle()
 2. get_data()
@@ -74,3 +84,6 @@ For more info, tips and examples on how to use the following methods, please con
 13. get_result
 14. get_results()
 15. to_xml(listofrecords)
+
+##F. Licensing
+The library and all its components are free to use, copy and modify, and are provided "AS IS", without warranty of any kind. However, I will greatly appreciate it if you'd give me credit and mention me in your works or anywhere you use this library.
