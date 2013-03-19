@@ -13,7 +13,17 @@ So you may be asking yourself:
 
 **NOTE:** the `compiled source` folder contains the ready-to-use library script (the file inside this folder should be put inside your Alfred workflow's folder); the `uncompiled source` folder contains the plain .applescript file that you can view online, and it contains fully commented code to better understand what I did there.
 
-##B. Known Limitations
+##B. Features
+There are a lot of things you can do with this library to make your life a lot easier when creating & programming your Alfred Workflows, so here's a list of the most important features (the list will grow while I improve the library):
+
+* **object-oriented approach** to write less & more readable code
+* internal **workflow introspection** (finding the bundle ID, cache & storage paths)
+* generate Alfred-compatible **XML feedback** with ease
+* saving & retrieving **workflow-related settings**
+* **remote data requests**
+* various **internal utilities that improve AppleScript** (string manipulation, file system utilities) - undocumented yet since I'll be adding more soon, but you can look inside the uncompiled code to get an idea of what is available
+
+##C. Known Limitations
 Now, because AppleScript is a bit limited in terms of capabilities, some functionality isn't available right now, but I will try to improve this library further.
 
 * **no JSON support <u>yet</u>** - AppleScript doesn't know anything about JSON, but I'm already planning a JSON parser for AppleScript
@@ -30,17 +40,6 @@ Now, because AppleScript is a bit limited in terms of capabilities, some functio
 	  {theKey:"na", theValue: missing value} 
 	}
 	```
-
-
-##C. Features
-There are a lot of things you can do with this library to make your life a lot easier when creating & programming your Alfred Workflows, so here's a list of the most important features (the list will grow while I improve the library):
-
-* object-oriented approach to write less & more readable code
-* internal workflow introspection (finding the bundle ID, cache & storage paths)
-* generate Alfred-compatible XML feedback with ease
-* saving & retrieving workflow-related settings
-* remote data requests
-* various internal utilities that improve AppleScript (string manipulation, file system utilities)
 
 ##D. Initialization
 
