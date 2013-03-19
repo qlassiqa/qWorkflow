@@ -630,6 +630,7 @@ end q_is_empty
 ### removes white space surrounding a string
 on q_trim(str)
 	if class of str is not text or class of str is not string or str is missing value then return str
+	if str is "" then return str
 	
 	repeat while str begins with " "
 		try
