@@ -40,7 +40,7 @@ There are a lot of things you can do with this library to make your life a lot e
 * generate Alfred-compatible XML feedback with ease
 * saving & retrieving workflow-related settings
 * remote data requests
-* various internal utilities that improve AppleScript (string manipulation, file system utilities)
+* various internal utilities that improve AppleScript (string manipulation, file system utilities) - undocumented yet since I'll be adding more soon, but you can look inside the uncompiled code to get an idea of what is available
 
 ##D. Initialization
 
