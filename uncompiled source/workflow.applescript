@@ -4,8 +4,8 @@ Description:			This AppleScript class provides several useful functions for retr
 					and formatting data to be used with Alfred 2 Workflow.
 Author:				Ursan Razvan
 Original Source:		https://github.com/jdfwarrior/Workflows  (written in PHP by David Ferguson)
-Revised: 			18 March 2013
-Version: 			0.2
+Revised: 			19 March 2013
+Version: 			0.3
 *)
 
 -- @description
