@@ -6,9 +6,9 @@ An example Alfred workflow file that uses my AppleScript Workflow library to sho
 <p align="center">
 
 <img src="https://raw.github.com/qlassiqa/alfred-workflow/master/example%20workflows/screenshot.jpg" alt="rating a song"/>
-
+<br/><br/>
 <img src="https://raw.github.com/qlassiqa/alfred-workflow/master/example%20workflows/screenshot2.jpg" alt="rating with arguments"/>
-
+<br/><br/>
 <img src="https://raw.github.com/qlassiqa/alfred-workflow/master/example%20workflows/screenshot3.jpg" alt="no song playing"/>
 
 </p>
