@@ -6,3 +6,5 @@ An example Alfred workflow file that uses my AppleScript Workflow library to sho
 ![no arguments](https://raw.github.com/qlassiqa/alfred-workflow/master/example%20workflows/screenshot.jpg)
 
 ![with argument](https://raw.github.com/qlassiqa/alfred-workflow/master/example%20workflows/screenshot2.jpg)
+
+![no song playing](https://raw.github.com/qlassiqa/alfred-workflow/master/example%20workflows/screenshot3.jpg)
