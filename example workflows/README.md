@@ -7,7 +7,7 @@ An example Alfred workflow file that uses my AppleScript Workflow library to sho
 
 <img src="https://raw.github.com/qlassiqa/alfred-workflow/master/example%20workflows/screenshot.jpg" alt="rating a song"/>
 
--> ![with argument](https://raw.github.com/qlassiqa/alfred-workflow/master/example%20workflows/screenshot2.jpg) <-
+<img src="https://raw.github.com/qlassiqa/alfred-workflow/master/example%20workflows/screenshot2.jpg" alt="rating with arguments"/>
 
 <img src="https://raw.github.com/qlassiqa/alfred-workflow/master/example%20workflows/screenshot3.jpg" alt="no song playing"/>
 
