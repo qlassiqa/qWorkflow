@@ -1,4 +1,4 @@
-#Workflow Library
+#qWorkflow Library
 
 ##A. Introduction
 This is an AppleScript library for creating workflows with Alfred 2. This library provides an object-oriented class with functions for working with plist settings files, reading and writing data to files, generating Alfred feedback results, requesting remote data, and more.
@@ -21,7 +21,8 @@ There are a lot of things you can do with this library to make your life a lot e
 * generate Alfred-compatible **XML feedback** with ease
 * saving & retrieving **workflow-related settings**
 * **remote data requests**
-* various **internal utilities that improve AppleScript** (string manipulation, file system utilities) - undocumented yet since I'll be adding more soon, but you can look inside the uncompiled code to get an idea of what is available
+* sending notifications through the **Notification Center** (thanks to [Daji-Djan](https://github.com/Daij-Djan/DDMountainNotifier))
+* various **internal utilities that improve AppleScript** (string and date manipulation, file system utilities)
 
 ##C. Known Limitations
 Now, because AppleScript is a bit limited in terms of capabilities, some functionality isn't available right now, but I will try to improve this library further.
@@ -42,22 +43,23 @@ Now, because AppleScript is a bit limited in terms of capabilities, some functio
 	```
 
 ##D. Initialization
+Before you write any code, it's imperative that you copy the `q_workflow.scpt` library file. If you plan to use the NotificationCenter methods to trigger notifications, then it's vital that you copy the `bin` folder to your Workflow folder as well since it contains a utility that interfaces with MacOS. Note that trying to send notifications without having the bin folder in your Workflow folder will produce no result (and yes, the utility has to stay inside the bin folder for notifications to work).
 
 ```
 set workflowFolder to do shell script "pwd"
-set wf to load script POSIX file (workflowFolder & "/workflow.scpt")
-set wf to wf's new_workflow()
+set wlib to load script POSIX file (workflowFolder & "/q_workflow.scpt")
+set wf to wlib's new_workflow()
 ```
 
 or by specifying a bundle name:
 
 ```
 ...
-set wf to wf's new_workflow_with_bundle("com.mycompany.mybundlename")
+set wf to wlib's new_workflow_with_bundle("com.mycompany.mybundlename")
 ```
 
 **Explanations:**
-* the first line determines the Alfred workflow's bundle path because this is where the "workflow.scpt" library should be placed in order to work
+* the first line determines the Alfred workflow's bundle path because this is where the "q_workflow.scpt" library should be placed in order to work
 
 * the second line loads the library from the bundle's path assuming that you already placed it there
 
@@ -66,8 +68,10 @@ set wf to wf's new_workflow_with_bundle("com.mycompany.mybundlename")
 * since AppleScript doesn't support optional parameters, there are 2 constructors: `new_workflow()` with no parameters, which creates a new class that automatically fetches the bundle name from Alfred, and `new_workflow_with_bundle(<name>)`, which takes 1 parameter with the desired bundle name if none was specified in Alfred.
 
 ##E. Methods
+This library provides 2 categories of methods, namely **workflow methods** and **utility methods**. Workflow methods can be used only after creating a new workflow class (these are also known as instance methods), and provide basic handlers to deal with Alfred Workflows. Utility methods, on the other hand, contain handlers that are used internally by the workflow methods, as well as useful handlers for regular use that enhance AppleScript's capabilities (these include string and date manipulation, file system checks, sending notification, etc.)
 
-####1. get_bundle()
+### Workflow Methods
+####1. get\_bundle()
 Takes no parameter and returns the value of the bundle id for the current workflow. If no value is available, then `missing value` is returned.
 
 *Example:*
@@ -80,7 +84,7 @@ output:
 com.qlassiqa.iTunesRatings
 ```
 
-####2. get_data()
+####2. get\_data()
 Takes no parameter and returns the value of the path to the storage directory for your workflow if it is available. Returns missing value if the value isn't available.
 
 *Example:*
@@ -93,7 +97,7 @@ output:
 /Users/qlassiqa/Library/Application Support/Alfred 2/Workflow Data/com.qlassiqa.iTunesRatings/
 ```
 
-####3. get_cache()
+####3. get\_cache()
 Takes no parameter and returns the value of the path to the cache directory for your workflow if it is available. Returns missing value if the value isn't available.
 
 *Example:*
@@ -106,7 +110,7 @@ output:
 /Users/qlassiq/Library/Caches/com.runningwithcrayons.Alfred-2/Workflow Data/com.qlassiqa.iTunesRatings/
 ```
 
-####4. get_path()
+####4. get\_path()
 Takes no parameter and returns the value of the path to the current folder for your workflow if it is available. Returns missing value if the value isn't available.
 
 *Example:*
@@ -119,7 +123,7 @@ output:
 /Users/qlassiqa/Dropbox/Public/Alfred2/Alfred.alfredpreferences/workflows/user.workflow.3BA9A8FC-75DB-494F-926A-CE19221E1211/
 ```
 
-####5. get_home()
+####5. get\_home()
 Takes no parameter and returns the value of the home path for the current user. Returns missing value if the value isn't available.
 
 *Example:*
@@ -132,7 +136,7 @@ output:
 /Users/qlassiqa
 ```
 
-####6. set_value(key, value, plistfile)
+####6. set\_value(key, value, plistfile)
 Save values to a specified plist. If the plist file doesn't exist, it will be created in the workflow's data folder, and if the plistfile parameter is `missing value` or an empty string, a default "settings.plist" file will be created.
 
 If the first parameter is a record list then the second parameter becomes the plist file to save to. Or you could just ignore this and use the `set_values` method that takes only 2 parameters for this scenario (presented next).
@@ -200,7 +204,7 @@ output:
 </plist>
 ```
 
-####7. set_values(listofrecords, plistfile)
+####7. set\_values(listofrecords, plistfile)
 Save a list of records to a specified plist. If the plist file doesn't exist, it will be created in the workflow's data folder, and if the plistfile parameter is `missing value` or an empty string, a default "settings.plist" file will be created.
 
 Each record must adhere to the following notation:
@@ -229,7 +233,7 @@ output:
 </plist>
 ```
 
-####8. get_value(key, plistfile)
+####8. get\_value(key, plistfile)
 Read a value from the specified plist. Note that if the plist file cannot be located, the script will automatically create an empty plist file in the data folder of the workflow. Also, if the plistfile parameter is `missing value` or an empty string, a default "settings.plist" file will be created.
 
 *Example:*
@@ -304,7 +308,7 @@ output:
 }
 ```
 
-####11. write_file(textorlist, cachefile)
+####11. write\_file(textorlist, cachefile)
 Accepts data and a string file name to store data to local file. Each call to this method will overwrite the file if it already exists.
 
 **Note:** due to AppleScript's lack of JSON support, this method can write to file only a piece of text, a value that can be converted to text, or a list that doesn't contain sublists or records.
@@ -323,7 +327,7 @@ string
 2. 12.5
 ```
 
-####12. read_file(cachefile)
+####12. read\_file(cachefile)
 Returns data from a local cache file, or missing value if the file doesn't exist. Note that if the file exists but is empty, it will be automatically deleted to clean up the workflow folder.
 
 *Example:*
@@ -337,7 +341,7 @@ output:
 "12.5"
 ```
 
-####13. get_result
+####13. add\_result with(out) isValid given theUid, theArg, theTitle, theSubtitle, theAutocomplete, theIcon, theType
 Creates a new result item that is cached within the class object. This set of results is available via the get_results() functions, or, can be formatted and returned as XML via the to_xml() function.
 
 **Note:** this method uses the labeled parameter syntax in AppleScript (see example), and takes the following 'camelCase' parameters:
@@ -358,7 +362,7 @@ Creates a new result item that is cached within the class object. This set of re
 
 *Example:* (the following code was separated on different lines for easier reading, but should be written on a single line or separated using the "¬" AppleScript reserverd character.
 ```
-1. get_result of wf without isValid given 
+1. add_result of wf without isValid given 
 	theUid:"alfred", 
 	theArg:"alfredapp", 
 	theTitle:"Alfred", 
@@ -367,7 +371,7 @@ Creates a new result item that is cached within the class object. This set of re
 	theIcon:"fileicon:/Applications/Alfred 2.app", 
 	theType:"Alfredapp"
 
-2. get_result of wf with isValid given
+2. add_result of wf with isValid given
 	theUid:"r9996",
 	theArg:5,
 	theTitle:"Alfred",
@@ -386,14 +390,14 @@ output:
 
 **Note:** any of the above parameters can accept empty strings or missing values.
 
-####14. get_results()
+####14. get\_results()
 Returns a list of available result items from the class' internal cache.
 
 *Example:*
 ```
-get_result of wf without isValid given theUid:"alfred", theArg:"alfredapp", theTitle:"Alfred", theAutocomplete:"Alfred", theSubtitle:"/Applications/Alfred.app", theIcon:"fileicon:/Applications/Alfred 2.app", theType:"Alfredapp"
+add_result of wf without isValid given theUid:"alfred", theArg:"alfredapp", theTitle:"Alfred", theAutocomplete:"Alfred", theSubtitle:"/Applications/Alfred.app", theIcon:"fileicon:/Applications/Alfred 2.app", theType:"Alfredapp"
 
-get_result of wf with isValid given theUid:"r9996", theArg:5, theTitle:"Alfred", theSubtitle:"", theAutocomplete:missing value, theIcon:"icon.png", theType:missing value
+add_result of wf with isValid given theUid:"r9996", theArg:5, theTitle:"Alfred", theSubtitle:"", theAutocomplete:missing value, theIcon:"icon.png", theType:missing value
 
 wf's get_results()
 ```
@@ -406,14 +410,14 @@ output:
 }
 ```
 
-####15. to_xml(listofrecords)
-Convert a list of records into XML format. Passing an empty string or `missing value` as the parameter will make the method use the class' internal cache results as the list of records (this is built using the `get_result` method).
+####15. to\_xml(listofrecords)
+Convert a list of records into XML format. Passing an empty string or `missing value` as the parameter will make the method use the class' internal cache results as the list of records (this is built using the `add_result` method).
 
 *Example:*
 ```
-get_result of wf without isValid given theUid:"alfred", theArg:"alfredapp", theTitle:"Alfred", theAutocomplete:"Alfred", theSubtitle:"/Applications/Alfred.app", theIcon:"fileicon:/Applications/Alfred 2.app", theType:"Alfredapp"
+add_result of wf without isValid given theUid:"alfred", theArg:"alfredapp", theTitle:"Alfred", theAutocomplete:"Alfred", theSubtitle:"/Applications/Alfred.app", theIcon:"fileicon:/Applications/Alfred 2.app", theType:"Alfredapp"
 
-get_result of wf with isValid given theUid:"r9996", theArg:5, theTitle:"Alfred", theSubtitle:"", theAutocomplete:missing value, theIcon:"icon.png", theType:missing value
+add_result of wf with isValid given theUid:"r9996", theArg:5, theTitle:"Alfred", theSubtitle:"", theAutocomplete:missing value, theIcon:"icon.png", theType:missing value
 
 wf's to_xml("")
 ```
@@ -433,6 +437,219 @@ output:
 		<icon>icon.png</icon>
 	</item>
 </items>
+```
+
+### Utility Methods
+####1. q\_trim(text)
+Removes any whitespace characters from the start and end of a given text.
+
+*Example:*
+```
+wlib's q_trim("   abc  " & return & "  def")
+```
+
+output: 
+```
+abc
+def
+```
+
+####2. q\_join(list, delimiter or string of delimiters)
+Takes the elements of a list and returns a text with the joined elements using the specified delimiter or string of delimiters.
+
+*Example:*
+```
+1. q_join({"Test", "me", "now"}, ".")
+2. q_join({"Test", "me", "now"}, ". ")
+```
+
+output:
+```
+1. Test.me.now
+2. Test. me. now
+```
+
+####3. q\_split(text, delimiter or string of delimiters or list of delimiters)
+Takes a piece of text and splits it into smaller pieces based on specific delimiters that will be ignored. The resulting pieces are put in a list.
+
+*Example:*
+```
+1. q_split("Test. Me. Now", ".")
+2. q_split("Test. Me, now", {". ", ","})
+```
+
+output:
+```
+1. {"Test", " Me", " Now"}
+2. {"Test", "Me", " now"}
+```
+
+####4. q\_is\_empty(string or list)
+Takes a text or list and checks if it's empty. An empty text is one that, when trimmed at both ends, has a length of 0. A list is empty when it has no elements. Also, `missing value` is also considered an empty value, so it will return true.
+
+*Example:*
+```
+1. q_is_empty("")
+2. q_is_empty("    ")
+3. q_is_empty("  a  ")
+4. q_is_empty({})
+5. q_is_empty({"a"})
+```
+
+output:
+```
+1. true
+2. true
+3. false
+4. true
+5. false
+```
+
+####5/6/7. q\_file\_exists, q\_folder\_exists, q\_path\_exists
+All methods are used to check if a given file or folder exists. The `q_file_exists` checks if a file path exists, the `q_folder_exists` checks if a folder or volume path exists, while the `q_path_exists` checks if a file/folder/volume path exists.
+
+All three methods work with both HFS and Unix path styles, but none of them expand the tilde character (~).
+
+*Example:*
+```
+1. q_file_exists("MacHD:Users:mike:Desktop:test.txt")
+2. q_file_exists("MacHD:Users:mike:")
+3. q_folder_exists("MacHD:Users:mike:")
+4. q_folder_exists("MacHD:Users:mike")
+5. q_folder_exists("Users/mike")
+6. q_folder_exists("/Users/mike")
+7. q_folder_exists("MacHD")
+8. q_folder_exists("MacHD:")
+9. q_path_exists("MacHD:Users:mike:Desktop:test.txt")
+10. q_path_exists("MacHD:")
+```
+
+output:
+```
+1. true
+2. false
+3. true
+4. true
+5. true
+6. true
+7. false
+8. true
+9. true
+10. true
+```
+
+####8. q\_clean\_list(list)
+Takes a list and removes all `missing value` elements from it and its sublists, if any (recursively)
+
+*Example:*
+```
+1. q_clean_list({1, missing value, 2})
+2. q_clean_list({1, missing value, {2, missing value}})
+```
+
+output:
+```
+1. {1, 2}
+2. {1, {2}}
+```
+
+####9. q\_encode(text)
+Encodes a given text to valid XML text.
+
+*Example:*
+```
+q_encode("testing \" and &")
+```
+
+output:
+```
+testing &quot; and &amp;
+```
+
+####10. q\_date\_to\_unixdate(date)
+Takes a native AppleScript date value and converts it to a Unix formatted date.
+
+*Example:*
+```
+q_date_to_unixdate(current date)
+```
+
+output:
+```
+03/22/2013 11:47:33 PM
+```
+
+####11. q\_unixdate\_to\_date(text)
+Takes a Unix formatted date and converts it to a native AppleScript date value.
+
+*Example:*
+```
+q_unixdate_to_date("03/22/2013 11:47:33 PM")
+```
+
+output:
+```
+date "Friday, March 22, 2013 11:47:33 PM"
+```
+
+####12. q\_date\_to\_timestamp(date)
+Takes a native AppleScript date value and converts it to an epoch timestamp.
+
+*Example:*
+```
+q_date_to_timestamp(current date)
+```
+
+output:
+```
+1363988971
+```
+
+####13. q\_timestamp\_to\_date(text)
+Takes an epoch timestamp and converts it to a native AppleScript date value.
+
+*Example:*
+```
+1. q_timestamp_to_date("1363988971")
+2. q_timestamp_to_date("1363988971000")
+```
+
+output:
+```
+1. date "Friday, March 22, 2013 11:49:31 PM"
+2. date "Friday, March 22, 2013 11:49:31 PM"
+```
+
+####14. q\_send\_notification(message, details, extra)
+Displays a notification through MacOS's Notification Center system. A notification is made out of 3 parts: the top message text which appears in bold, the middle detailed information text, and the bottom extra information text - a notification must have at least a message or an extra text.
+
+####15. q\_notify()
+Takes no parameters and displays a generic notification through MacOS's Notification Center system.
+
+####16. q\_encode\_url(str)
+Encodes a string for passing it to a URL without breaking the URL. 
+
+*Example:*
+```
+q_encode_url("search=a&b=c")
+```
+
+output:
+```
+search%3Da%26b%3Dc
+```
+
+####17. q\_decode\_url(str)
+Decodes a URL formatted string into a regular text.
+
+*Example:*
+```
+q_decode_url("search%3Da%26b%3Dc")
+```
+
+output:
+```
+search=a&b=c
 ```
 
 ##F. Licensing

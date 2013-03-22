@@ -1,4 +1,4 @@
-#Workflow Library
+#qWorkflow Library
 
 ##A. Introduction
 This is an AppleScript library for creating workflows with Alfred 2. This library provides an object-oriented class with functions for working with plist settings files, reading and writing data to files, generating Alfred feedback results, requesting remote data, and more (make sure you read the [FULL DOCUMENTATION](https://github.com/qlassiqa/alfred-workflow/blob/master/documentation/Documentation.md) to get a grip on how to properly use this library).
@@ -21,7 +21,8 @@ There are a lot of things you can do with this library to make your life a lot e
 * generate Alfred-compatible **XML feedback** with ease
 * saving & retrieving **workflow-related settings**
 * **remote data requests**
-* various **internal utilities that improve AppleScript** (string manipulation, file system utilities) - undocumented yet since I'll be adding more soon, but you can look inside the uncompiled code to get an idea of what is available
+* sending notifications through the **Notification Center** (thanks to [Daji-Djan](https://github.com/Daij-Djan/DDMountainNotifier))
+* various **internal utilities that improve AppleScript** (string and date manipulation, file system utilities)
 
 ##C. Known Limitations
 Now, because AppleScript is a bit limited in terms of capabilities, some functionality isn't available right now, but I will try to improve this library further.
@@ -42,22 +43,23 @@ Now, because AppleScript is a bit limited in terms of capabilities, some functio
 	```
 
 ##D. Initialization
+Before you write any code, it's imperative that you copy the `q_workflow.scpt` library file. If you plan to use the NotificationCenter methods to trigger notifications, then it's vital that you copy the `bin` folder to your Workflow folder as well since it contains a utility that interfaces with MacOS. Note that trying to send notifications without having the bin folder in your Workflow folder will produce no result (and yes, the utility has to stay inside the bin folder for notifications to work).
 
 ```
 set workflowFolder to do shell script "pwd"
-set wf to load script POSIX file (workflowFolder & "/workflow.scpt")
-set wf to wf's new_workflow()
+set wlib to load script POSIX file (workflowFolder & "/q_workflow.scpt")
+set wf to wlib's new_workflow()
 ```
 
 or by specifying a bundle name:
 
 ```
 ...
-set wf to wf's new_workflow_with_bundle("com.mycompany.mybundlename")
+set wf to wlib's new_workflow_with_bundle("com.mycompany.mybundlename")
 ```
 
 **Explanations:**
-* the first line determines the Alfred workflow's bundle path because this is where the "workflow.scpt" library should be placed in order to work
+* the first line determines the Alfred workflow's bundle path because this is where the "q_workflow.scpt" library should be placed in order to work
 
 * the second line loads the library from the bundle's path assuming that you already placed it there
 
@@ -68,21 +70,43 @@ set wf to wf's new_workflow_with_bundle("com.mycompany.mybundlename")
 ##E. Methods
 For more info, tips and examples on how to use the following methods, please consult the accompanying documentation (again, it is vital that you look at the [FULL DOCUMENTATION](https://github.com/qlassiqa/alfred-workflow/blob/master/documentation/Documentation.md) to get a grip on how to properly use this library).
 
-1. get_bundle()
-2. get_data()
-3. get_cache()
-4. get_path()
-5. get_home()
-6. set_value(key, value, plistfile)
-7. set_values(listofrecords, plistfile)
-8. get_value(key, plistfile)
+This library provides 2 categories of methods, namely **workflow methods** and **utility methods**. Workflow methods can be used only after creating a new workflow class (these are also known as instance methods), and provide basic handlers to deal with Alfred Workflows. Utility methods, on the other hand, contain handlers that are used internally by the workflow methods, as well as useful handlers for regular use that enhance AppleScript's capabilities (these include string and date manipulation, file system checks, sending notification, etc.)
+
+#### Workflow Methods
+1. get\_bundle()
+2. get\_data()
+3. get\_cache()
+4. get\_path()
+5. get\_home()
+6. set\_value(key, value, plistfile)
+7. set\_values(listofrecords, plistfile)
+8. get\_value(key, plistfile)
 9. request(url)
 10. mdfind(query)
-11. write_file(textorlist, cachefile)
-12. read_file(cachefile)
-13. get_result
-14. get_results()
-15. to_xml(listofrecords)
+11. write\_file(textorlist, cachefile)
+12. read\_file(cachefile)
+13. add\_result with(out) isValid given theUid, theArg, theTitle, theSubtitle, theAutocomplete, theIcon, theType
+14. get\_results()
+15. to\_xml(listofrecords)
+
+#### Utility Methods
+1. q\_trim(text)
+2. q\_join(list, delimiter or string of delimiters)
+3. q\_split(text, delimiter or string of delimiters or list of delimiters)
+4. q\_is\_empty(string or list)
+5. q\_file\_exists(file path)
+6. q\_folder\_exists(folder path)
+7. q\_path\_exists(file or folder path)
+8. q\_clean\_list(list)
+9. q\_encode(text)
+10. q\_date\_to\_unixdate(date)
+11. q\_unixdate\_to\_date(text)
+12. q\_date\_to\_timestamp(date)
+13. q\_timestamp\_to\_date(text)
+14. q\_send\_notification(message, details, extra)
+15. q\_notify()
+16. q\_encode\_url(str)
+17. q\_decode\_url(str)
 
 ##F. Licensing
 The library and all its components are free to use, copy and modify, and are provided "AS IS", without warranty of any kind. However, I will greatly appreciate it if you'd give me credit and mention me in your works or anywhere you use this library.

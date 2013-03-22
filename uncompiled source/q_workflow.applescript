@@ -1,12 +1,13 @@
 (*
-Name:				Workflow (*adapted from PHP code to AppleScript*)
+Name:				qWorkflow (*adapted from PHP code to AppleScript*)
 Description:			This AppleScript class provides several useful functions for retrieving, parsing, 
 					and formatting data to be used with Alfred 2 Workflow.
 Author:				Ursan Razvan
 Original Source:		https://github.com/jdfwarrior/Workflows  (written in PHP by David Ferguson)
-Revised: 			19 March 2013
-Version: 			0.3
+Revised: 			23 March 2013
+Version: 			0.4
 *)
+
 
 -- @description
 -- Handler for creating new Workflow script objects (mimics classes and constructors from OOP)
@@ -84,10 +85,10 @@ on new_workflow_with_bundle(bundleid)
 			
 			# create the Cache and Data folders if they don't exist
 			if not my q_folder_exists(my _cache) then
-				do shell script "mkdir '" & (my _cache) & "'"
+				do shell script "mkdir '" & quoted form of (my _cache) & "'"
 			end if
 			if not my q_folder_exists(my _data) then
-				do shell script "mkdir '" & (my _data) & "'"
+				do shell script "mkdir '" & quoted form of (my _data) & "'"
 			end if
 			
 			# initialize the results list
@@ -226,6 +227,11 @@ on new_workflow_with_bundle(bundleid)
 						set ic to (items 10 thru -1 of ic as text)
 					end if
 					set xml to xml & ">" & my q_encode(ic) & "</icon>" & return
+				else
+					if my q_file_exists(my _path & "icon.png") then
+						set ic to "icon.png"
+						set xml to xml & tab2 & "<icon>icon.png</icon>" & return
+					end if
 				end if
 				set xml to xml & tab & "</item>" & return
 			end repeat
@@ -455,7 +461,7 @@ on new_workflow_with_bundle(bundleid)
 		-- @param $theAutocomplete - the autocomplete value for the result item
 		-- @return list items to be passed back to Alfred
 		--
-		on get_result given theUid:_uid, theArg:_arg, theTitle:_title, theSubtitle:_sub, theIcon:_icon, theAutocomplete:_auto, theType:_type, isValid:_valid
+		on add_result given theUid:_uid, theArg:_arg, theTitle:_title, theSubtitle:_sub, theIcon:_icon, theAutocomplete:_auto, theType:_type, isValid:_valid
 			if _uid is missing value then set _uid to ""
 			if _arg is missing value then set _arg to ""
 			if _title is missing value then set _title to ""
@@ -472,7 +478,7 @@ on new_workflow_with_bundle(bundleid)
 			
 			set end of (my _results) to temp
 			return temp
-		end get_result
+		end add_result
 		
 		
 		-- @description:
@@ -529,7 +535,7 @@ on new_workflow_with_bundle(bundleid)
 						set eof of f to 0
 						close access location
 					on error
-						do shell script "touch " & location
+						do shell script "touch " & quoted form of location
 					end try
 				end if
 			end if
@@ -636,7 +642,7 @@ on q_trim(str)
 	return str
 end q_trim
 
-### filters "missing value" from a list
+### filters "missing value" from a list recursively
 on q_clean_list(lst)
 	if lst is missing value or class of lst is not list then return lst
 	set l to {}
@@ -677,3 +683,103 @@ on q_encode(str)
 	end repeat
 	return s
 end q_encode
+
+### encodes a native AppleScript date to Unix formatted date
+on q_date_to_unixdate(theDate)
+	set {day:d, year:y, time:t} to theDate
+	
+	copy theDate to b
+	set b's month to January
+	set m to (b - 2500000 - theDate) div -2500000
+	
+	tell (y * 10000 + m * 100 + d) as text
+		set UnixDate to text 5 thru 6 & "/" & text 7 thru 8 & "/" & text 1 thru 4
+	end tell
+	
+	set h24 to t div hours
+	set h12 to (h24 + 11) mod 12 + 1
+	if (h12 = h24) then
+		set ampm to " AM"
+	else
+		set ampm to " PM"
+	end if
+	set min to t mod hours div minutes
+	set s to t mod minutes
+	
+	tell (1000000 + h12 * 10000 + min * 100 + s) as text
+		set UnixTime to text 2 thru 3 & ":" & text 4 thru 5 & ":" & text 6 thru 7 & ampm
+	end tell
+	
+	return UnixDate & " " & UnixTime
+end q_date_to_unixdate
+
+### decodes a Unix date to a native AppleScript date
+on q_unixdate_to_date(theUnixDate)
+	return date theUnixDate
+end q_unixdate_to_date
+
+### decodes a Unix epoch timestamp to a native AppleScript date
+on q_timestamp_to_date(timestamp)
+	if length of timestamp = 13 then
+		set timestamp to characters 1 thru -4 of timestamp as text
+	end if
+	
+	set h to do shell script "date -r " & timestamp & " \"+%Y %m %d %H %M %S\""
+	
+	set mydate to current date
+	set year of mydate to (word 1 of h as integer)
+	set month of mydate to (word 2 of h as integer)
+	set day of mydate to (word 3 of h as integer)
+	set hours of mydate to (word 4 of h as integer)
+	set minutes of mydate to (word 5 of h as integer)
+	set seconds of mydate to (word 6 of h as integer)
+	
+	return mydate
+end q_timestamp_to_date
+
+### encodes a native AppleScript date to a Unix epoch timestamp
+on q_date_to_timestamp(theDate)
+	return ((current date) - (date ("1/1/1970")) - (time to GMT)) as miles as text
+end q_date_to_timestamp
+
+### handlers to show notifications in the Notification Center
+on q_send_notification(theMessage, theDetails, theExtra)
+	set _path to do shell script "pwd"
+	#set _path to "/Users/woofy/Dropbox/work/Public Scripts/old/Alfred"
+	if _path does not end with "/" then set _path to _path & "/"
+	
+	if theMessage is missing value then set theMessage to ""
+	if theDetails is missing value then set theDetails to ""
+	if theExtra is missing value then set theExtra to ""
+	
+	if my q_trim(theMessage) is "" and my q_trim(theExtra) is "" then set theMessage to "notification"
+	
+	try
+		do shell script (quoted form of _path & "bin/q_notifier com.runningwithcrayons.Alfred-2 " & quoted form of theMessage & " " & quoted form of theDetails & " " & quoted form of theExtra)
+	end try
+end q_send_notification
+on q_notify()
+	my q_send_notification("", "", "")
+end q_notify
+
+### encode a URL
+on q_encode_url(str)
+	local str
+	try
+		return (do shell script "/bin/echo " & quoted form of str & ¬
+			" | perl -MURI::Escape -lne 'print uri_escape($_)'")
+	on error
+		return missing value
+	end try
+end q_encode_url
+
+### decode a URL
+on q_decode_url(str)
+	local str
+	try
+		return (do shell script "/bin/echo " & quoted form of str & ¬
+			" | perl -MURI::Escape -lne 'print uri_unescape($_)'")
+	on error
+		return missing value
+	end try
+end q_decode_url
