@@ -303,7 +303,8 @@ Read & parse raw JSON data from a remote file/url, and converts it to native App
 ```
 
 output:
-``` {
+```
+{
 	name: "JSON.sh",
 	version: "0.1.4",
 	description: "JSON parser written in bash",
