@@ -5,11 +5,11 @@ An example Alfred workflow file that uses my AppleScript qWorkflow library to sh
 
 <p align="center">
 
-<img src="https://raw.github.com/qlassiqa/alfred-workflow/master/example%20workflows/screenshot.jpg" alt="rating a song"/>
+<img src="https://raw.github.com/qlassiqa/qWorkflow/master/example%20workflows/screenshot.jpg" alt="rating a song"/>
 <br/><br/>
-<img src="https://raw.github.com/qlassiqa/alfred-workflow/master/example%20workflows/screenshot2.jpg" alt="rating with arguments"/>
+<img src="https://raw.github.com/qlassiqa/qWorkflow/master/example%20workflows/screenshot2.jpg" alt="rating with arguments"/>
 <br/><br/>
-<img src="https://raw.github.com/qlassiqa/alfred-workflow/master/example%20workflows/screenshot3.jpg" alt="no song playing"/>
+<img src="https://raw.github.com/qlassiqa/qWorkflow/master/example%20workflows/screenshot3.jpg" alt="no song playing"/>
 
 </p>
 
@@ -19,6 +19,8 @@ An example Alfred workflow that uses the same qWorkflow library to find the late
 
 <p align="center">
 	
-
+<img src="https://raw.github.com/qlassiqa/qWorkflow/master/example%20workflows/screenshot4.jpg" alt="searching latest tweets"/>
+	<br/><br/>
+<img src="https://raw.github.com/qlassiqa/qWorkflow/master/example%20workflows/screenshot5.jpg" alt="nothing found"/>
 	
 </p>
