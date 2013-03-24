@@ -11,7 +11,7 @@ So you may be asking yourself:
 
 * ***but isn't it simpler to use my PHP / Python / etc. skills and combine them with AppleScript inside Alfred?*** Actually no, it isn't simpler - I've tried it, and it becomes really messy, not to mention that Alfred's workflow system doesn't allow that much mixing.
 
-**NOTE:** the `compiled source` folder contains the ready-to-use library script (the file inside this folder should be put inside your Alfred workflow's folder); the `uncompiled source` folder contains the plain .applescript file that you can view online, and it contains fully commented code to better understand what I did there.
+**NOTE:** the `compiled source` folder contains the ready-to-use library script (the files inside this folder should be put inside your Alfred workflow's folder); the `uncompiled source` folder contains the plain .applescript file that you can view online, and it contains fully commented code to better understand what I did there.
 
 ##B. Features
 There are a lot of things you can do with this library to make your life a lot easier when creating & programming your Alfred Workflows, so here's a list of the most important features (the list will grow while I improve the library):
@@ -20,18 +20,20 @@ There are a lot of things you can do with this library to make your life a lot e
 * internal **workflow introspection** (finding the bundle ID, cache & storage paths)
 * generate Alfred-compatible **XML feedback** with ease
 * saving & retrieving **workflow-related settings**
-* **remote data requests**
-* sending notifications through the **Notification Center** (thanks to [Daji-Djan](https://github.com/Daij-Djan/DDMountainNotifier))
+* **remote data requests**, as well as **JSON support** (thanks to David @[Mousedown Software](http://www.mousedown.net/mouseware/index.html))
+* **sending notifications** through the Notification Center (thanks to [Daji-Djan](https://github.com/Daij-Djan/DDMountainNotifier))
 * various **internal utilities that improve AppleScript** (string and date manipulation, file system utilities)
 
 ##C. Known Limitations
 Now, because AppleScript is a bit limited in terms of capabilities, some functionality isn't available right now, but I will try to improve this library further.
 
-* **no JSON support <u>yet</u>** - AppleScript doesn't know anything about JSON, but I'm already planning a JSON parser for AppleScript
+* **no JSONP support <u>yet</u>** - AppleScript doesn't know anything about JSON or JSONP, so I had to get help from [Mousedown Software](http://www.mousedown.net/mouseware/index.html), and they provided me with a fully functional and really fast JSON helper for which I've made a wrapper to embed it inside my library, and hopefully they will add JSONP support in the near feature; but until then you will have to make sure you're only working with JSON data
 
-* **bigger file size** - since AppleScript requires extra coding for text manipulation and object handling, the file size is a bit large compared to the PHP equivalent, and it will probably increase as I add new features to it
+* **strict syntax for accessing JSON properties** - the [JSON Helper](http://www.mousedown.net/mouseware/JSONHelper.html) that I'm using to add JSON capabilities to this library parses JSON data and converts it to native AppleScript lists and records, and it's obvious that some JSON properties will have the same name as AppleScript's reserved keywords, so to avoid any syntax issues it's highly recommended that you enclose all JSON property names in vertical bar characters, like so: `|text| of |result| of item 1 of json`  (both `text` and `result` are reserved keywords in the AppleScript language, and not using the vertical bars would trigger errors in your code)
 
-* **strict syntax for plist records** - it's known that AppleScript's records are a bit clumsy since they lack so many features, that's why when saving a list of records as a PList settings file you should adhere to the following strict record notation: 
+* **bigger file size** - since AppleScript requires extra coding for text manipulation and object handling, the file size is a bit large compared to the PHP equivalent, and it will probably increase as I add new features to it (features that are totally worth the size increase)
+
+* **strict syntax for plist records** - it's known that AppleScript's records are a bit clumsy since they lack so many features, that's why when saving a list of records as a PList settings file you should adhere to the following strict record notation:
  
   ```
 	{ 
@@ -43,7 +45,9 @@ Now, because AppleScript is a bit limited in terms of capabilities, some functio
 	```
 
 ##D. Initialization
-Before you write any code, it's imperative that you copy the `q_workflow.scpt` library file. If you plan to use the NotificationCenter methods to trigger notifications, then it's vital that you copy the `bin` folder to your Workflow folder as well since it contains a utility that interfaces with MacOS. Note that trying to send notifications without having the bin folder in your Workflow folder will produce no result (and yes, the utility has to stay inside the bin folder for notifications to work).
+Before you write any code, it's imperative that you copy the `q_workflow.scpt` library file. 
+
+<font color="#ff0000">**NOTE:** If you plan to use the NotificationCenter methods to trigger notifications or if you plan on using the JSON capabilities of this library, then it's vital that you also copy the `bin` folder to your Workflow folder "as is" since it contains the helper utilities that provide these extra features. Note that trying to send notifications or read JSON without having the bin folder in your Workflow folder will produce no result (and yes, the utilities have to stay inside the bin folder at all time with the current filenames for this to work).</font>
 
 ```
 set workflowFolder to do shell script "pwd"
@@ -269,7 +273,7 @@ Read data from a remote file/url, essentially a shortcut for curl
 
 output:
 ```
-1. {
+1. "{
 	"name": "JSON.sh",
 	"version": "0.1.4",
 	"description": "JSON parser written in bash",
@@ -279,19 +283,55 @@ output:
   		"url": "https://github.com/dominictarr/JSON.sh.git"
   	},
   	"bin": {
-   		"JSON.sh": "./JSON.sh"
+   		"JSON": "./JSON.sh"
   	},
   	"dependencies": {},
   	"devDependencies": {},
   	"author": "Dominic Tarr",
   	"scripts": { "test": "./all-tests.sh" }
-}
-
+}"
 
 2. the raw html contents of Adobe's website
 ```
 
-####10. mdfind(query)
+####10. request\_json(url)
+Read & parse raw JSON data from a remote file/url, and converts it to native AppleScript records and lists (or missing value if an invalid JSON or URL). Note that this will \*NOT\* work with JSONP data, but only with JSON.
+
+*Example:*
+```
+1. set json to wf's request_json("http://mysite.com/search.json?q=json&rpp=5")
+```
+
+output:
+``` {
+	name: "JSON.sh",
+	version: "0.1.4",
+	description: "JSON parser written in bash",
+	homepage: "http://github.com/dominictarr/JSON.sh",
+	repository: {
+  		type: "git",
+  		url: "https://github.com/dominictarr/JSON.sh.git"
+  	},
+  	bin: {
+   		JSON: "./JSON.sh"
+  	},
+  	dependencies: {},
+  	devDependencies: {},
+  	author: "Dominic Tarr",
+  	scripts: { 
+		test: "./all-tests.sh"
+	}
+}
+```
+
+accessing individual JSON data:
+```
+1. |name| of json
+2. count of |repository| of json
+3. |JSON| of |bin| of json
+```
+
+####11. mdfind(query)
 Allows searching the local hard drive using mdfind, and returns a list of all found paths.
 
 *Example:*
@@ -308,7 +348,7 @@ output:
 }
 ```
 
-####11. write\_file(textorlist, cachefile)
+####12. write\_file(textorlist, cachefile)
 Accepts data and a string file name to store data to local file. Each call to this method will overwrite the file if it already exists.
 
 **Note:** due to AppleScript's lack of JSON support, this method can write to file only a piece of text, a value that can be converted to text, or a list that doesn't contain sublists or records.
@@ -327,7 +367,7 @@ string
 2. 12.5
 ```
 
-####12. read\_file(cachefile)
+####13. read\_file(cachefile)
 Returns data from a local cache file, or missing value if the file doesn't exist. Note that if the file exists but is empty, it will be automatically deleted to clean up the workflow folder.
 
 *Example:*
@@ -341,7 +381,7 @@ output:
 "12.5"
 ```
 
-####13. add\_result with(out) isValid given theUid, theArg, theTitle, theSubtitle, theAutocomplete, theIcon, theType
+####14. add\_result with(out) isValid given theUid, theArg, theTitle, theSubtitle, theAutocomplete, theIcon, theType
 Creates a new result item that is cached within the class object. This set of results is available via the get_results() functions, or, can be formatted and returned as XML via the to_xml() function.
 
 **Note:** this method uses the labeled parameter syntax in AppleScript (see example), and takes the following 'camelCase' parameters:
@@ -390,7 +430,7 @@ output:
 
 **Note:** any of the above parameters can accept empty strings or missing values.
 
-####14. get\_results()
+####15. get\_results()
 Returns a list of available result items from the class' internal cache.
 
 *Example:*
@@ -410,7 +450,7 @@ output:
 }
 ```
 
-####15. to\_xml(listofrecords)
+####16. to\_xml(listofrecords)
 Convert a list of records into XML format. Passing an empty string or `missing value` as the parameter will make the method use the class' internal cache results as the list of records (this is built using the `add_result` method).
 
 *Example:*
@@ -653,4 +693,6 @@ search=a&b=c
 ```
 
 ##F. Licensing
-The library and all its components are free to use, copy and modify, and are provided "AS IS", without warranty of any kind. However, I will greatly appreciate it if you'd give me credit and mention me in your works or anywhere you use this library.
+This library is free to use, copy and modify, and is provided "AS IS", without warranty of any kind. However, I will greatly appreciate it if you'd give me credit and mention me in your works or anywhere you use this library.
+
+The use of the helper utilities shipped with this library is subject to each author's license, which can be read at the links provided in [section B].

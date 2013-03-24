@@ -12,3 +12,13 @@ An example Alfred workflow file that uses my AppleScript qWorkflow library to sh
 <img src="https://raw.github.com/qlassiqa/alfred-workflow/master/example%20workflows/screenshot3.jpg" alt="no song playing"/>
 
 </p>
+
+
+###Twitter Search
+An example Alfred workflow that uses the same qWorkflow library to find the latest world wide tweets in real-time for a given search query using the JSON capabilities provided by this library (note the support for unicode character output).
+
+<p align="center">
+	
+
+	
+</p>

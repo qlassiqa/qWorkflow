@@ -4,8 +4,8 @@ Description:			This AppleScript class provides several useful functions for retr
 					and formatting data to be used with Alfred 2 Workflow.
 Author:				Ursan Razvan
 Original Source:		https://github.com/jdfwarrior/Workflows  (written in PHP by David Ferguson)
-Revised: 			23 March 2013
-Version: 			0.4
+Revised: 			24 March 2013
+Version: 			0.5
 *)
 
 
@@ -85,10 +85,10 @@ on new_workflow_with_bundle(bundleid)
 			
 			# create the Cache and Data folders if they don't exist
 			if not my q_folder_exists(my _cache) then
-				do shell script "mkdir '" & quoted form of (my _cache) & "'"
+				do shell script "mkdir " & quoted form of (my _cache)
 			end if
 			if not my q_folder_exists(my _data) then
-				do shell script "mkdir '" & quoted form of (my _data) & "'"
+				do shell script "mkdir " & quoted form of (my _data)
 			end if
 			
 			# initialize the results list
@@ -350,6 +350,41 @@ on new_workflow_with_bundle(bundleid)
 			# return nothing by default
 			return missing value
 		end request
+		
+		
+		-- @description:
+		-- Read and convert JSON data from a remote file/url to native AppleScript records/lists
+		--
+		-- @param $website - website URL to request
+		-- @return a list, record, list of records/lists, or record of lists/records
+		--
+		-- @observations:
+		-- In order to avoid syntax conflicts with AppleScript's own reserved
+		-- words, classes, types and more, it's recommended to enclose all
+		-- properties in | | characters, like |result| since result is a reserved word
+		on request_json(website)
+			try
+				# obtain the location of the JSON Helper
+				set jsonHelper to my _path & "bin/q_json.helper"
+				
+				# create a dynamic temporary script and run it;
+				# this ensures the Helper will work without having
+				# to install it as an App on the machine
+				set scpt to "tell application \"" & jsonHelper & "\" to fetch JSON from \"" & website & "\""
+				set scpt to run script scpt
+				
+				# if no result, then something went wrong, so return nothing
+				if scpt = "" then
+					return missing value
+				else
+					# otherwise return the JSON AppleScript object
+					return scpt
+				end if
+			on error
+				# if there is no JSON Helper, ignore the call and return nothing
+				return missing value
+			end try
+		end request_json
 		
 		
 		-- @description:
@@ -755,7 +790,7 @@ on q_send_notification(theMessage, theDetails, theExtra)
 	if my q_trim(theMessage) is "" and my q_trim(theExtra) is "" then set theMessage to "notification"
 	
 	try
-		do shell script (quoted form of _path & "bin/q_notifier com.runningwithcrayons.Alfred-2 " & quoted form of theMessage & " " & quoted form of theDetails & " " & quoted form of theExtra)
+		do shell script (quoted form of _path & "bin/q_notifier.helper com.runningwithcrayons.Alfred-2 " & quoted form of theMessage & " " & quoted form of theDetails & " " & quoted form of theExtra)
 	end try
 end q_send_notification
 on q_notify()
