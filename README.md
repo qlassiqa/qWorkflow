@@ -47,7 +47,7 @@ Now, because AppleScript is a bit limited in terms of capabilities, some functio
 ##D. Initialization
 Before you write any code, it's imperative that you copy the `q_workflow.scpt` library file. 
 
-<p style="color: #ff0000">**NOTE:** If you plan to use the NotificationCenter methods to trigger notifications or if you plan on using the JSON capabilities of this library, then it's vital that you also copy the `bin` folder to your Workflow folder "as is" since it contains the helper utilities that provide these extra features. Note that trying to send notifications or read JSON without having the bin folder in your Workflow folder will produce no result (and yes, the utilities have to stay inside the bin folder at all time with the current filenames for this to work).</p>
+<p style="color: red;"><strong>NOTE:</strong> If you plan to use the NotificationCenter methods to trigger notifications or if you plan on using the JSON capabilities of this library, then it's vital that you also copy the `bin` folder to your Workflow folder "as is" since it contains the helper utilities that provide these extra features. Note that trying to send notifications or read JSON without having the bin folder in your Workflow folder will produce no result (and yes, the utilities have to stay inside the bin folder at all time with the current filenames for this to work).</p>
 
 ```
 set workflowFolder to do shell script "pwd"
