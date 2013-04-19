@@ -387,7 +387,7 @@ Creates a new result item that is cached within the class object. This set of re
 
 **Note:** this method uses the labeled parameter syntax in AppleScript (see example), and takes the following 'camelCase' parameters:
 
-* **theUid**: the uid attribute is a value that is used to help Alfred learn about your results. You know that Alfred learns based on the items you use the most. That same mechanism can be used in feedback results. Give your results a unique identifier and Alfred will learn which ones you use the most and prioritize them by moving them up in the result list
+* **theUid**: the uid attribute is a value that is used to help Alfred learn about your results. You know that Alfred learns based on the items you use the most. That same mechanism can be used in feedback results. Give your results a unique identifier and Alfred will learn which ones you use the most and prioritize them by moving them up in the result list (or omit this attribute to show the results in the preferred order)
 
 * **theArg**: the arg attribute is the value that is passed to the next portion of the workflow when the result item is selected in the Alfred results list. So if you pressed enter on a result, the arg value would be passed to a shell script, applescript, or any of the other Action items
 
@@ -399,7 +399,7 @@ Creates a new result item that is cached within the class object. This set of re
 
 * **theType**: the type attribute allows you to specify what type of result you are generating. Currently, the only value available for this attribute is "file". This will allow you to specify that the feedback item is a file and allows you to use Result Actions on the feedback item
 
-* **theIcon**: the icon element allows you to specify the icon to use for your result item. This can be a file located in your workflow directory, an icon of a file type on your local machine, or the icon of a specific file on your system. To use the icons of a specific file type you use this syntax `"filetype:public.folder"`. To use the icons of another folder/file you use this syntax `"fileicon:/Applications"`. To use an icon inside a subfolder located within the workflow you use this syntax `"subfolder/icon.png"`.
+* **theIcon**: the icon element allows you to specify the icon to use for your result item. This can be a file located in your workflow directory, an icon of a file type on your local machine, or the icon of a specific file on your system. To use the icons of a specific file type you use this syntax `"filetype:public.folder"`. To use the icons of another folder/file you use this syntax `"fileicon:/Applications"`. To use an icon inside a subfolder located within the workflow you use this syntax `"subfolder/icon.png"` (omitting this attribute will search for the default `icon.png` file in the workflow folder).
 
 *Example:* (the following code was separated on different lines for easier reading, but should be written on a single line or separated using the "¬" AppleScript reserverd character.
 ```
