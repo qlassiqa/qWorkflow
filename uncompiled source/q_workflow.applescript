@@ -274,7 +274,7 @@ on new_workflow_with_bundle(bundleid)
 						
 						# and create (or change) the required entry with the class type
 						# of the key value, the name of the key and its value
-						make new property list item at end of property list items of contents of b Â
+						make new property list item at end of property list items of contents of b Â¬
 							with properties {kind:(class of (theValue of r)), name:(theKey of r), value:(theValue of r)}
 					end repeat
 				else
@@ -290,7 +290,7 @@ on new_workflow_with_bundle(bundleid)
 					else
 						set x to b
 					end if
-					make new property list item at end of property list items of contents of c Â
+					make new property list item at end of property list items of contents of c Â¬
 						with properties {kind:(class of x), name:a, value:x}
 				end if
 			end tell
@@ -438,8 +438,8 @@ on new_workflow_with_bundle(bundleid)
 			try
 				set f to open for access b with write permission
 				set eof f to 0
-				write a to f as Çclass utf8È
-				close access b
+				write a to f as Â«class utf8Â»
+				close access f
 				return true
 			on error
 				close access b
@@ -466,7 +466,7 @@ on new_workflow_with_bundle(bundleid)
 				
 				# get its size in bytes and close it
 				set sz to get eof f
-				close access a
+				close access f
 				
 				# if file is empty then remove it and return missing value
 				if sz = 0 then
@@ -474,7 +474,7 @@ on new_workflow_with_bundle(bundleid)
 					return missing value
 				else
 					# otherwise return the file data
-					return read a
+					return read a as Â«class utf8Â»
 				end if
 			on error
 				close access a
@@ -525,7 +525,7 @@ on new_workflow_with_bundle(bundleid)
 		on _make_plist(plistPath)
 			tell application "System Events"
 				set parentElement to make new property list item with properties {kind:record}
-				set plistFile to Â
+				set plistFile to Â¬
 					make new property list file with properties {contents:parentElement, name:plistPath}
 			end tell
 			return plistFile
@@ -568,7 +568,7 @@ on new_workflow_with_bundle(bundleid)
 					try
 						set f to open for access location with write permission
 						set eof of f to 0
-						close access location
+						close access f
 					on error
 						do shell script "touch " & quoted form of location
 					end try
@@ -801,7 +801,7 @@ end q_notify
 on q_encode_url(str)
 	local str
 	try
-		return (do shell script "/bin/echo " & quoted form of str & Â
+		return (do shell script "/bin/echo " & quoted form of str & Â¬
 			" | perl -MURI::Escape -lne 'print uri_escape($_)'")
 	on error
 		return missing value
@@ -812,7 +812,7 @@ end q_encode_url
 on q_decode_url(str)
 	local str
 	try
-		return (do shell script "/bin/echo " & quoted form of str & Â
+		return (do shell script "/bin/echo " & quoted form of str & Â¬
 			" | perl -MURI::Escape -lne 'print uri_unescape($_)'")
 	on error
 		return missing value
