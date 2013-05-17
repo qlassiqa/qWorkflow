@@ -274,7 +274,7 @@ on new_workflow_with_bundle(bundleid)
 						
 						# and create (or change) the required entry with the class type
 						# of the key value, the name of the key and its value
-						make new property list item at end of property list items of contents of b Â
+						make new property list item at end of property list items of contents of b Â¬
 							with properties {kind:(class of (theValue of r)), name:(theKey of r), value:(theValue of r)}
 					end repeat
 				else
@@ -290,7 +290,7 @@ on new_workflow_with_bundle(bundleid)
 					else
 						set x to b
 					end if
-					make new property list item at end of property list items of contents of c Â
+					make new property list item at end of property list items of contents of c Â¬
 						with properties {kind:(class of x), name:a, value:x}
 				end if
 			end tell
@@ -438,7 +438,7 @@ on new_workflow_with_bundle(bundleid)
 			try
 				set f to open for access b with write permission
 				set eof f to 0
-				write a to f as Çclass utf8È
+				write a to f as Â«class utf8Â»
 				close access f
 				return true
 			on error
@@ -474,7 +474,7 @@ on new_workflow_with_bundle(bundleid)
 					return missing value
 				else
 					# otherwise return the file data
-					return read a as Çclass utf8È
+					return read a as Â«class utf8Â»
 				end if
 			on error
 				close access a
@@ -525,7 +525,7 @@ on new_workflow_with_bundle(bundleid)
 		on _make_plist(plistPath)
 			tell application "System Events"
 				set parentElement to make new property list item with properties {kind:record}
-				set plistFile to Â
+				set plistFile to Â¬
 					make new property list file with properties {contents:parentElement, name:plistPath}
 			end tell
 			return plistFile
@@ -700,7 +700,7 @@ on q_encode(str)
 	set s to ""
 	repeat with sRef in str
 		set c to contents of sRef
-		if c is in {"&", "'", "\"", "<", ">", tab} then
+		if c is in {"&", "'", "\"", "<", ">"} then
 			if c is "&" then
 				set s to s & "&amp;"
 			else if c is "'" then
@@ -711,8 +711,6 @@ on q_encode(str)
 				set s to s & "&lt;"
 			else if c is ">" then
 				set s to s & "&gt;"
-			else if c is tab then
-				set s to s & "&#009;"
 			end if
 		else
 			set s to s & c
@@ -803,7 +801,7 @@ end q_notify
 on q_encode_url(str)
 	local str
 	try
-		return (do shell script "/bin/echo " & quoted form of str & Â
+		return (do shell script "/bin/echo " & quoted form of str & Â¬
 			" | perl -MURI::Escape -lne 'print uri_escape($_)'")
 	on error
 		return missing value
@@ -814,7 +812,7 @@ end q_encode_url
 on q_decode_url(str)
 	local str
 	try
-		return (do shell script "/bin/echo " & quoted form of str & Â
+		return (do shell script "/bin/echo " & quoted form of str & Â¬
 			" | perl -MURI::Escape -lne 'print uri_unescape($_)'")
 	on error
 		return missing value
