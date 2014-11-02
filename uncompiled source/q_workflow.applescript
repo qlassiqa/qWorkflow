@@ -524,6 +524,9 @@ on new_workflow_with_bundle(bundleid)
 		--
 		on _make_plist(plistPath)
 			tell application "System Events"
+				-- In Yosemite, `make new property list file` does not create a new 
+				-- property list file, so we have to use defaults write
+				do shell script "defaults write " & quoted form of plistPath & " x x"
 				set parentElement to make new property list item with properties {kind:record}
 				set plistFile to Â
 					make new property list file with properties {contents:parentElement, name:plistPath}
